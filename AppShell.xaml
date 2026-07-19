@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="KrakenMobile.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:KrakenMobile"
+    xmlns:views="clr-namespace:KrakenMobile.Views"
+    Title="Kraken Unlocker"
+    Shell.BackgroundColor="#0A0A0A"
+    Shell.ForegroundColor="#CC0000"
+    Shell.TitleColor="#FFFFFF"
+    Shell.TabBarBackgroundColor="#0A0A0A"
+    Shell.TabBarForegroundColor="#CC0000"
+    Shell.TabBarTitleColor="#CC0000"
+    Shell.TabBarUnselectedColor="#888888">
+
+    <Tab Title="Home" Icon="{OnPlatform Android='home.png', iOS='home.png'}">
+        <ShellContent Title="Home" ContentTemplate="{DataTemplate local:Views.HomePage}" Route="HomePage" />
+    </Tab>
+
+    <Tab Title="Games" Icon="{OnPlatform Android='games.png', iOS='games.png'}">
+        <ShellContent Title="Games" ContentTemplate="{DataTemplate local:Views.GamesPage}" Route="GamesPage" />
+    </Tab>
+
+    <Tab Title="Achievements" Icon="{OnPlatform Android='achievements.png', iOS='achievements.png'}">
+        <ShellContent Title="Achievements" ContentTemplate="{DataTemplate local:Views.AchievementsPage}" Route="AchievementsPage" />
+    </Tab>
+
+    <Tab Title="Spoofer" Icon="{OnPlatform Android='spoofer.png', iOS='spoofer.png'}">
+        <ShellContent Title="Spoofer" ContentTemplate="{DataTemplate local:Views.SpooferPage}" Route="SpooferPage" />
+    </Tab>
+
+    <Tab Title="Settings" Icon="{OnPlatform Android='settings.png', iOS='settings.png'}">
+        <ShellContent Title="Settings" ContentTemplate="{DataTemplate local:Views.SettingsPage}" Route="SettingsPage" />
+    </Tab>
+
+</Shell>

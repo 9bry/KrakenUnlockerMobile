@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:KrakenMobile.ViewModels"
+             x:Class="KrakenMobile.Views.SpooferPage"
+             BackgroundColor="#0A0A0A"
+             Title="Spoofer">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0" Padding="16,16">
+
+            <!-- Current Spoof Status -->
+            <Border BackgroundColor="#141414"
+                    Stroke="#222222"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="16"
+                    Margin="0,0,0,16">
+
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="SPOOF STATUS"
+                           Style="{StaticResource KrakenStatLabel}"
+                           FontSize="11" />
+
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border Grid.Column="0"
+                                Stroke="{Binding SpoofingBorderColor}"
+                                StrokeThickness="2"
+                                StrokeShape="RoundRectangle 10"
+                                WidthRequest="44"
+                                HeightRequest="44"
+                                BackgroundColor="#1A0505"
+                                VerticalOptions="Center">
+                            <Label Text="{Binding SpoofingStatusIcon}"
+                                   FontSize="20"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="{Binding SpoofingStatus}"
+                                   FontSize="15"
+                                   FontAttributes="Bold"
+                                   TextColor="#FFFFFF" />
+                            <Label Text="{Binding CurrentSpoofGame}"
+                                   FontSize="12"
+                                   TextColor="#888888"
+                                   LineBreakMode="TailTruncation" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Game Search Input -->
+            <Border BackgroundColor="#141414"
+                    Stroke="#222222"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="16"
+                    Margin="0,0,0,16">
+
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="SEARCH GAME"
+                           Style="{StaticResource KrakenStatLabel}"
+                           FontSize="11" />
+
+                    <Entry Placeholder="Enter Title ID or game name..."
+                           PlaceholderColor="#555555"
+                           TextColor="#FFFFFF"
+                           BackgroundColor="#0D0D0D"
+                           FontSize="14"
+                           Text="{Binding GameSearchText}" />
+
+                    <Button Text="Search"
+                            Style="{StaticResource KrakenSecondaryButton}"
+                            HorizontalOptions="Fill"
+                            Command="{Binding SearchGameCommand}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Game Info Card -->
+            <Border BackgroundColor="#141414"
+                    Stroke="#222222"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="16"
+                    Margin="0,0,0,16"
+                    IsVisible="{Binding HasGameInfo}">
+
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="GAME DETAILS"
+                           Style="{StaticResource KrakenStatLabel}"
+                           FontSize="11" />
+
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="12" ColumnSpacing="16">
+
+                        <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
+                            <Label Text="TITLE ID"
+                                   Style="{StaticResource KrakenStatLabel}"
+                                   FontSize="10" />
+                            <Label Text="{Binding GameTitleId}"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="#FFFFFF" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
+                            <Label Text="GAMERSCORE"
+                                   Style="{StaticResource KrakenStatLabel}"
+                                   FontSize="10" />
+                            <Label Text="{Binding GameGamerscore}"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="#FFFFFF" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
+                            <Label Text="GAME NAME"
+                                   Style="{StaticResource KrakenStatLabel}"
+                                   FontSize="10" />
+                            <Label Text="{Binding GameName}"
+                                   FontSize="13"
+                                   TextColor="#FFFFFF"
+                                   LineBreakMode="TailTruncation" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
+                            <Label Text="TYPE"
+                                   Style="{StaticResource KrakenStatLabel}"
+                                   FontSize="10" />
+                            <Label Text="{Binding GameType}"
+                                   FontSize="13"
+                                   TextColor="#FFFFFF" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Heartbeat Indicator -->
+            <Border BackgroundColor="#141414"
+                    Stroke="#222222"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="16"
+                    Margin="0,0,0,16">
+
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="HEARTBEAT"
+                           Style="{StaticResource KrakenStatLabel}"
+                           FontSize="11" />
+
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <ActivityIndicator Grid.Column="0"
+                                           IsRunning="{Binding IsSpoofing}"
+                                           IsVisible="{Binding IsSpoofing}"
+                                           Color="#CC0000"
+                                           HeightRequest="24"
+                                           WidthRequest="24"
+                                           VerticalOptions="Center" />
+
+                        <Label Grid.Column="0"
+                               Text="&#x25CF;"
+                               FontSize="12"
+                               TextColor="{Binding HeartbeatColor}"
+                               VerticalOptions="Center"
+                               IsVisible="{Binding IsSpoofing, Converter={StaticResource InvertBoolConverter}}"
+                               Margin="6,0" />
+
+                        <Label Grid.Column="1"
+                               Text="{Binding HeartbeatStatus}"
+                               FontSize="13"
+                               TextColor="#888888"
+                               VerticalOptions="Center" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Action Buttons -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,0,0,16">
+
+                <Button Grid.Column="0"
+                        Text="{Binding SpoofButtonText}"
+                        Style="{StaticResource KrakenPrimaryButton}"
+                        HorizontalOptions="Fill"
+                        HeightRequest="52"
+                        Command="{Binding ToggleSpoofCommand}" />
+
+                <Button Grid.Column="1"
+                        Text="Stop"
+                        Style="{StaticResource KrakenSecondaryButton}"
+                        HorizontalOptions="Fill"
+                        HeightRequest="52"
+                        IsEnabled="{Binding IsSpoofing}"
+                        Command="{Binding StopSpoofCommand}" />
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:KrakenMobile.ViewModels"
+             x:Class="KrakenMobile.Views.SettingsPage"
+             BackgroundColor="#0A0A0A"
+             Title="Settings">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0" Padding="16,16">
+
+            <!-- Version / App Info -->
+            <Label Text="SETTINGS"
+                   Style="{StaticResource KrakenSectionTitle}"
+                   FontSize="22"
+                   Margin="4,0,0,4" />
+
+            <Label Text="Manage your account and app preferences."
+                   Style="{StaticResource KrakenSectionSubtitle}"
+                   Margin="4,0,0,20" />
+
+            <!-- License / Activation Card -->
+            <Border BackgroundColor="#141414"
+                    Stroke="#222222"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="16"
+                    Margin="0,0,0,16">
+
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="LICENSE"
+                           Style="{StaticResource KrakenStatLabel}"
+                           FontSize="11" />
+
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2">
+                            <Label Text="Kraken Unlocker Mobile"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="#FFFFFF" />
+                            <Label Text="{Binding LicenseStatus}"
+                                   FontSize="12"
+                                   TextColor="#00AA00" />
+                        </VerticalStackLayout>
+
+                        <Label Grid.Column="1"
+                               Text="{Binding VersionText}"
+                               FontSize="12"
+                               TextColor="#888888"
+                               VerticalOptions="Center" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Account Card -->
+            <Border BackgroundColor="#141414"
+                    Stroke="#222222"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="16"
+                    Margin="0,0,0,16">
+
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="ACCOUNT"
+                           Style="{StaticResource KrakenStatLabel}"
+                           FontSize="11" />
+
+                    <!-- Sign In / Sign Out Button -->
+                    <Button Text="{Binding SignInButtonText}"
+                            Style="{StaticResource KrakenPrimaryButton}"
+                            HorizontalOptions="Fill"
+                            HeightRequest="52"
+                            Command="{Binding SignInOutCommand}" />
+
+                    <Label Text="{Binding AccountStatus}"
+                           FontSize="12"
+                           TextColor="#888888"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Preferences Card -->
+            <Border BackgroundColor="#141414"
+                    Stroke="#222222"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="16"
+                    Margin="0,0,0,16">
+
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="PREFERENCES"
+                           Style="{StaticResource KrakenStatLabel}"
+                           FontSize="11" />
+
+                    <!-- Dark Mode Toggle -->
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2">
+                            <Label Text="Dark Mode"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="#FFFFFF" />
+                            <Label Text="Use dark theme throughout the app"
+                                   FontSize="12"
+                                   TextColor="#888888" />
+                        </VerticalStackLayout>
+                        <Switch Grid.Column="1"
+                                IsToggled="{Binding DarkModeEnabled}"
+                                OnColor="#CC0000"
+                                ThumbColor="#FFFFFF"
+                                VerticalOptions="Center" />
+                    </Grid>
+
+                    <!-- Notifications Toggle -->
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2">
+                            <Label Text="Notifications"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="#FFFFFF" />
+                            <Label Text="Receive unlock notifications"
+                                   FontSize="12"
+                                   TextColor="#888888" />
+                        </VerticalStackLayout>
+                        <Switch Grid.Column="1"
+                                IsToggled="{Binding NotificationsEnabled}"
+                                OnColor="#CC0000"
+                                ThumbColor="#FFFFFF"
+                                VerticalOptions="Center" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Event Token Card -->
+            <Border BackgroundColor="#141414"
+                    Stroke="#222222"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="16"
+                    Margin="0,0,0,16">
+
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="EVENT TOKEN"
+                           Style="{StaticResource KrakenStatLabel}"
+                           FontSize="11" />
+
+                    <Label Text="Paste the event token copied from the PC version of Kraken Unlocker."
+                           FontSize="12"
+                           TextColor="#888888" />
+
+                    <Editor Text="{Binding EventTokenText}"
+                            AutoSize="TextChanges"
+                            HeightRequest="70"
+                            IsTextPredictionEnabled="False"
+                            IsSpellCheckEnabled="False"
+                            BackgroundColor="#0A0A0A"
+                            TextColor="#FFFFFF"
+                            Placeholder="x:XBL3.0 x=...;..."
+                            PlaceholderColor="#555555" />
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <Button Grid.Column="0"
+                                Text="Save Token"
+                                Style="{StaticResource KrakenPrimaryButton}"
+                                Command="{Binding SaveEventTokenCommand}" />
+
+                        <Button Grid.Column="1"
+                                Text="Clear"
+                                Style="{StaticResource KrakenSecondaryButton}"
+                                Command="{Binding ClearEventTokenCommand}" />
+                    </Grid>
+
+                    <Label Text="{Binding EventTokenStatus}"
+                           FontSize="12"
+                           TextColor="#00AA00"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- About Card -->
+            <Border BackgroundColor="#141414"
+                    Stroke="#222222"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="16"
+                    Margin="0,0,0,16">
+
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="ABOUT"
+                           Style="{StaticResource KrakenStatLabel}"
+                           FontSize="11" />
+
+                    <Button Text="About Kraken Unlocker"
+                            Style="{StaticResource KrakenSecondaryButton}"
+                            HorizontalOptions="Fill"
+                            Command="{Binding AboutCommand}" />
+
+                    <Label Text="Xbox Achievement Unlocker - Mobile Edition"
+                           FontSize="12"
+                           TextColor="#555555"
+                           HorizontalOptions="Center" />
+
+                    <Label Text="{Binding VersionText}"
+                           FontSize="11"
+                           TextColor="#444444"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

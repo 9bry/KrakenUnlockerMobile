@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KrakenMobile.Views.ForceUpdatePage"
+             BackgroundColor="#0A0A0A"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasBackButton="False"
+             Title="Update Required">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0" Padding="32" VerticalOptions="Center">
+
+            <!-- K Logo -->
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="0" Margin="0,0,0,8">
+                <Label Text="K" FontSize="96" TextColor="#CC0000" FontAttributes="Bold"
+                       FontFamily="ArialBlack" Margin="0,0,0,0" />
+            </HorizontalStackLayout>
+
+            <Label Text="KRAKEN"
+                   FontSize="28" FontAttributes="Bold"
+                   TextColor="#CC0000" HorizontalOptions="Center"
+                   FontFamily="ArialBlack" Margin="0,0,0,48" />
+
+            <!-- Update Required Title -->
+            <Label Text="UPDATE REQUIRED"
+                   FontSize="24" FontAttributes="Bold"
+                   TextColor="#FFFFFF" HorizontalOptions="Center"
+                   Margin="0,0,0,16" />
+
+            <!-- Divider -->
+            <BoxView HeightRequest="2" Color="#CC0000" HorizontalOptions="Fill" Margin="60,0,60,24" />
+
+            <!-- Description -->
+            <Label Text="A new version of Kraken is available. Please update to continue."
+                   FontSize="15" TextColor="#AAAAAA" HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center" Margin="0,0,0,32" />
+
+            <!-- Version Info Card -->
+            <Border BackgroundColor="#111111"
+                    Stroke="#222222"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="20" Margin="0,0,0,32">
+                <VerticalStackLayout Spacing="12">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="Current Version" FontSize="13" TextColor="#666666" />
+                        <Label Grid.Column="1" x:Name="CurrentVersionLabel" Text="v1.0"
+                               FontSize="13" TextColor="#888888" />
+                    </Grid>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="Latest Version" FontSize="13" TextColor="#666666" />
+                        <Label Grid.Column="1" x:Name="LatestVersionLabel" Text="v--"
+                               FontSize="13" TextColor="#CC0000" FontAttributes="Bold" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Release Notes -->
+            <Border BackgroundColor="#111111"
+                    Stroke="#222222"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="20" Margin="0,0,0,32"
+                    x:Name="ReleaseNotesBorder"
+                    IsVisible="False">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="RELEASE NOTES" FontSize="11" TextColor="#666666"
+                           FontAttributes="Bold" />
+                    <Label x:Name="ReleaseNotesLabel"
+                           FontSize="13" TextColor="#AAAAAA"
+                           MaxLines="10" LineBreakMode="TailTruncation" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Download Button -->
+            <Button x:Name="DownloadButton"
+                    Text="DOWNLOAD UPDATE"
+                    BackgroundColor="#CC0000"
+                    TextColor="#FFFFFF"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    CornerRadius="12"
+                    HeightRequest="56"
+                    HorizontalOptions="Fill"
+                    Margin="0,0,0,12" />
+
+            <!-- Exit Button -->
+            <Button x:Name="ExitButton"
+                    Text="EXIT"
+                    BackgroundColor="#1A1A1A"
+                    TextColor="#888888"
+                    FontSize="14"
+                    CornerRadius="12"
+                    HeightRequest="48"
+                    HorizontalOptions="Fill" />
+
+            <!-- Footer -->
+            <Label Text="You must update to use Kraken"
+                   FontSize="11" TextColor="#444444"
+                   HorizontalOptions="Center" Margin="0,32,0,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

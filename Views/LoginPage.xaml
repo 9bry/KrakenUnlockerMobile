@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KrakenMobile.Views.LoginPage"
+             BackgroundColor="#0A0A0A">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0" Padding="32" VerticalOptions="Center">
+
+            <Label Text="KRAKEN UNLOCKER"
+                   FontSize="32"
+                   FontAttributes="Bold"
+                   TextColor="#CC0000"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,8" />
+
+            <Label Text="Xbox Achievement Unlocker"
+                   FontSize="14"
+                   TextColor="#888888"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,48" />
+
+            <Border BackgroundColor="#141414"
+                    Stroke="#222222"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="24"
+                    Margin="0,0,0,24">
+
+                <VerticalStackLayout Spacing="20">
+
+                    <Label Text="SIGN IN"
+                           Style="{StaticResource KrakenStatLabel}"
+                           FontSize="12" />
+
+                    <Label Text="Sign in with your Xbox Live account to access your games and achievements."
+                           FontSize="13"
+                           TextColor="#888888"
+                           Margin="0,0,0,8" />
+
+                    <Button Text="Sign in with Xbox"
+                            Style="{StaticResource KrakenPrimaryButton}"
+                            HorizontalOptions="Fill"
+                            Command="{Binding LoginWithXboxCommand}"
+                            HeightRequest="52"
+                            FontSize="16" />
+
+                    <ActivityIndicator IsRunning="{Binding IsLoggingIn}"
+                                       IsVisible="{Binding IsLoggingIn}"
+                                       Color="#CC0000"
+                                       HeightRequest="30" />
+
+                    <Label Text="{Binding StatusText}"
+                           FontSize="13"
+                           TextColor="#888888"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"
+                           Margin="0,4,0,0" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <Label x:Name="VersionLabel"
+                   FontSize="11"
+                   TextColor="#444444"
+                   HorizontalOptions="Center"
+                   Margin="0,16,0,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

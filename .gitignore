@@ -1,0 +1,26 @@
+## .NET / MAUI build output
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+## Secrets & signing (NEVER commit)
+*.jks
+*.keystore
+*.pfx
+KrakenMobile.signing.props
+secrets.local.props
+*.local.props
+Env.local
+
+## App runtime logs
+*.log
+
+## Built artifacts (released via GitHub Releases, not committed)
+*.apk
+*.aab
+
+## OS / editor
+.DS_Store
+Thumbs.db

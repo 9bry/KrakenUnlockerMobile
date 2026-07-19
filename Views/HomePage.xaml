@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:KrakenMobile.ViewModels"
+             x:Class="KrakenMobile.Views.HomePage"
+             BackgroundColor="#0A0A0A"
+             Title="Home">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0" Padding="20,16">
+
+            <!-- Profile Hero Card -->
+            <Border BackgroundColor="#141414"
+                    Stroke="#222222"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="20"
+                    Margin="0,0,0,16">
+
+                <Grid ColumnDefinitions="80,*" ColumnSpacing="16">
+
+                    <!-- Profile Picture -->
+                    <Border Grid.Column="0"
+                            Stroke="#CC0000"
+                            StrokeThickness="2"
+                            StrokeShape="RoundRectangle 40"
+                            WidthRequest="80"
+                            HeightRequest="80"
+                            BackgroundColor="#1A0505">
+                        <Image Source="{Binding GamerPic}"
+                               Aspect="AspectFill" />
+                    </Border>
+
+                    <!-- Profile Info -->
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                        <Label Text="LIVE PROFILE"
+                               Style="{StaticResource KrakenStatLabel}"
+                               FontSize="10" />
+                        <Label Text="{Binding GamerTag}"
+                               FontSize="22"
+                               FontAttributes="Bold"
+                               TextColor="#FFFFFF"
+                               LineBreakMode="TailTruncation" />
+                        <Label Text="{Binding XuidDisplay}"
+                               FontSize="12"
+                               TextColor="#888888"
+                               LineBreakMode="TailTruncation" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <!-- Quick Action Cards -->
+            <Label Text="QUICK ACTIONS"
+                   Style="{StaticResource KrakenStatLabel}"
+                   FontSize="11"
+                   Margin="4,0,0,10" />
+
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10" Margin="0,0,0,16">
+
+                <!-- Unlock All Card -->
+                <Border Grid.Column="0"
+                        BackgroundColor="#1A0505"
+                        Stroke="#440B0B"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 10"
+                        Padding="12"
+                        HeightRequest="100">
+                    <VerticalStackLayout VerticalOptions="Center" Spacing="6">
+                        <Label Text="&#x1F513;"
+                               FontSize="24"
+                               HorizontalOptions="Center" />
+                        <Label Text="Unlock All"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               TextColor="#FFFFFF"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center" />
+                        <Label Text="All achievements"
+                               FontSize="9"
+                               TextColor="#888888"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Games Card -->
+                <Border Grid.Column="1"
+                        BackgroundColor="#1A0505"
+                        Stroke="#440B0B"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 10"
+                        Padding="12"
+                        HeightRequest="100">
+                    <VerticalStackLayout VerticalOptions="Center" Spacing="6">
+                        <Label Text="&#x1F3AE;"
+                               FontSize="24"
+                               HorizontalOptions="Center" />
+                        <Label Text="Games"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               TextColor="#FFFFFF"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center" />
+                        <Label Text="{Binding GameCount}"
+                               FontSize="9"
+                               TextColor="#888888"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Achievements Card -->
+                <Border Grid.Column="2"
+                        BackgroundColor="#1A0505"
+                        Stroke="#440B0B"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 10"
+                        Padding="12"
+                        HeightRequest="100">
+                    <VerticalStackLayout VerticalOptions="Center" Spacing="6">
+                        <Label Text="&#x1F3C6;"
+                               FontSize="24"
+                               HorizontalOptions="Center" />
+                        <Label Text="Achievements"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               TextColor="#FFFFFF"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center" />
+                        <Label Text="View all"
+                               FontSize="9"
+                               TextColor="#888888"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Stats Card -->
+            <Border BackgroundColor="#141414"
+                    Stroke="#222222"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="16"
+                    Margin="0,0,0,16">
+
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="ACCOUNT INFO"
+                           Style="{StaticResource KrakenStatLabel}"
+                           FontSize="11" />
+
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="12" ColumnSpacing="16">
+
+                        <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
+                            <Label Text="GAMERSCORE"
+                                   Style="{StaticResource KrakenStatLabel}"
+                                   FontSize="10" />
+                            <Label Text="{Binding GamerScore}"
+                                   Style="{StaticResource KrakenStatValue}" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
+                            <Label Text="STATUS"
+                                   Style="{StaticResource KrakenStatLabel}"
+                                   FontSize="10" />
+                            <Label Text="{Binding LoginStatus}"
+                                   Style="{StaticResource KrakenStatValue}" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
+                            <Label Text="XUID"
+                                   Style="{StaticResource KrakenStatLabel}"
+                                   FontSize="10" />
+                            <Label Text="{Binding Xuid}"
+                                   Style="{StaticResource KrakenStatValue}" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
+                            <Label Text="VERSION"
+                                   Style="{StaticResource KrakenStatLabel}"
+                                   FontSize="10" />
+                            <Label x:Name="VersionValueLabel"
+                                   Style="{StaticResource KrakenStatValue}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Status / Log Section -->
+            <Border BackgroundColor="#141414"
+                    Stroke="#222222"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="16">
+
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="STATUS"
+                           Style="{StaticResource KrakenStatLabel}"
+                           FontSize="11" />
+
+                    <Label Text="{Binding StatusText}"
+                           FontSize="13"
+                           TextColor="#888888"
+                           MaxLines="4" />
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
