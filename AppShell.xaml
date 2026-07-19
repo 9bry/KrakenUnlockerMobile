@@ -14,23 +14,23 @@
     Shell.TabBarTitleColor="#CC0000"
     Shell.TabBarUnselectedColor="#888888">
 
-    <Tab Title="Home" Icon="{OnPlatform Android='home.png', iOS='home.png'}">
+    <Tab Title="Home" Icon="home">
         <ShellContent Title="Home" ContentTemplate="{DataTemplate local:Views.HomePage}" Route="HomePage" />
     </Tab>
 
-    <Tab Title="Games" Icon="{OnPlatform Android='games.png', iOS='games.png'}">
+    <Tab Title="Games" Icon="games">
         <ShellContent Title="Games" ContentTemplate="{DataTemplate local:Views.GamesPage}" Route="GamesPage" />
     </Tab>
 
-    <Tab Title="Achievements" Icon="{OnPlatform Android='achievements.png', iOS='achievements.png'}">
+    <Tab Title="Achievements" Icon="achievements">
         <ShellContent Title="Achievements" ContentTemplate="{DataTemplate local:Views.AchievementsPage}" Route="AchievementsPage" />
     </Tab>
 
-    <Tab Title="Spoofer" Icon="{OnPlatform Android='spoofer.png', iOS='spoofer.png'}">
+    <Tab Title="Spoofer" Icon="spoofer">
         <ShellContent Title="Spoofer" ContentTemplate="{DataTemplate local:Views.SpooferPage}" Route="SpooferPage" />
     </Tab>
 
-    <Tab Title="Settings" Icon="{OnPlatform Android='settings.png', iOS='settings.png'}">
+    <Tab Title="Settings" Icon="settings">
         <ShellContent Title="Settings" ContentTemplate="{DataTemplate local:Views.SettingsPage}" Route="SettingsPage" />
     </Tab>
 

@@ -26,6 +26,9 @@ public static class XboxAuthService
     private static string? _cachedXblToken, _cachedEventsToken, _cachedXuid, _cachedUhs, _cachedSpoofToken;
     private static string? _manualEventsToken;
     private const string ManualEventsTokenKey = "kx_manual_events_token";
+    private static string? _manualXblToken;
+    private static string? _manualXuid;
+    private const string ManualXblTokenKey = "kx_manual_xbl_token";
     private static DateTime _cachedAt;
     private static readonly TimeSpan Ttl = TimeSpan.FromHours(20);
     private static PopCryptoProvider? _pop;
@@ -38,8 +41,9 @@ public static class XboxAuthService
         System.Diagnostics.Debug.WriteLine($"[XboxAuth] {msg}");
     }
 
-    public static bool IsLoggedIn => !string.IsNullOrEmpty(_cachedXblToken) && DateTime.UtcNow - _cachedAt < Ttl;
-    public static string? Xuid => _cachedXuid;
+    public static bool IsLoggedIn =>
+        (!string.IsNullOrEmpty(_cachedXblToken) && DateTime.UtcNow - _cachedAt < Ttl) || HasManualXblToken;
+    public static string? Xuid => HasManualXblToken ? _manualXuid : _cachedXuid;
     public static string? Uhs => _cachedUhs;
 
     static XboxAuthService()
@@ -155,7 +159,8 @@ public static class XboxAuthService
         catch (Exception e) { Diag("LogoutAsync exception: " + e.Message); return false; }
     }
 
-    public static string? GetXblToken() => IsLoggedIn ? _cachedXblToken : null;
+    public static string? GetXblToken() =>
+        HasManualXblToken ? _manualXblToken : (IsLoggedIn ? _cachedXblToken : null);
 
     public static string? ManualEventsToken
     {
@@ -181,6 +186,59 @@ public static class XboxAuthService
     }
 
     public static bool HasManualEventsToken => !string.IsNullOrWhiteSpace(ManualEventsToken);
+
+    public static string? ManualXblToken
+    {
+        get
+        {
+            if (_manualXblToken != null) return _manualXblToken;
+            try { _manualXblToken = SecureStorage.GetAsync(ManualXblTokenKey).GetAwaiter().GetResult(); }
+            catch { _manualXblToken = null; }
+            _manualXuid = ParseXuidFromXbl(_manualXblToken);
+            return _manualXblToken;
+        }
+        set
+        {
+            _manualXblToken = value;
+            _manualXuid = ParseXuidFromXbl(value);
+            try
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    SecureStorage.Remove(ManualXblTokenKey);
+                else
+                    SecureStorage.SetAsync(ManualXblTokenKey, value).GetAwaiter().GetResult();
+            }
+            catch { }
+        }
+    }
+
+    public static bool HasManualXblToken => !string.IsNullOrWhiteSpace(ManualXblToken);
+
+    public static string? ManualXuid => _manualXuid;
+
+    private static string? ParseXuidFromXbl(string? token)
+    {
+        if (string.IsNullOrWhiteSpace(token)) return null;
+        try
+        {
+            var afterPrefix = token.Contains(';') ? token.Substring(token.IndexOf(';') + 1) : token;
+            var jwt = afterPrefix.Trim();
+            var segments = jwt.Split('.');
+            var payloadSeg = segments.Length >= 2 ? segments[1] : jwt;
+
+            var pad = payloadSeg.Length % 4 == 0 ? "" : new string('=', 4 - (payloadSeg.Length % 4));
+            var json = Encoding.UTF8.GetString(
+                Convert.FromBase64String(payloadSeg.Replace('-', '+').Replace('_', '/') + pad));
+
+            using var doc = JsonDocument.Parse(json);
+            var xui = doc.RootElement
+                .GetProperty("DisplayClaims").GetProperty("xui")[0];
+            if (xui.TryGetProperty("xid", out var xid))
+                return xid.GetString();
+        }
+        catch { }
+        return null;
+    }
 
     public static string? GetEventsToken()
     {

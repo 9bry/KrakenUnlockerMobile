@@ -130,6 +130,52 @@
                 </VerticalStackLayout>
             </Border>
 
+            <!-- Xbox Auth Token Card -->
+            <Border BackgroundColor="#141414"
+                    Stroke="#222222"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="16"
+                    Margin="0,0,0,16">
+
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="XBOX AUTH TOKEN"
+                           Style="{StaticResource KrakenStatLabel}"
+                           FontSize="11" />
+
+                    <Label Text="Paste your XAuth (XBL) token to sign in without the Microsoft login flow. Copy it from the PC version of Kraken Unlocker."
+                           FontSize="12"
+                           TextColor="#888888" />
+
+                    <Editor Text="{Binding XblTokenText}"
+                            AutoSize="TextChanges"
+                            HeightRequest="70"
+                            IsTextPredictionEnabled="False"
+                            IsSpellCheckEnabled="False"
+                            BackgroundColor="#0A0A0A"
+                            TextColor="#FFFFFF"
+                            Placeholder="XBL3.0 x=...;..."
+                            PlaceholderColor="#555555" />
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <Button Grid.Column="0"
+                                Text="Save Token"
+                                Style="{StaticResource KrakenPrimaryButton}"
+                                Command="{Binding SaveXblTokenCommand}" />
+
+                        <Button Grid.Column="1"
+                                Text="Clear"
+                                Style="{StaticResource KrakenSecondaryButton}"
+                                Command="{Binding ClearXblTokenCommand}" />
+                    </Grid>
+
+                    <Label Text="{Binding XblTokenStatus}"
+                           FontSize="12"
+                           TextColor="#00AA00"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+
             <!-- Event Token Card -->
             <Border BackgroundColor="#141414"
                     Stroke="#222222"

@@ -47,6 +47,14 @@ public partial class SettingsPageViewModel : ObservableObject
         ? "Custom event token active"
         : "Using auto-generated token";
 
+    [ObservableProperty]
+    private string _xblTokenText = XboxAuthService.ManualXblToken ?? "";
+
+    [ObservableProperty]
+    private string _xblTokenStatus = XboxAuthService.HasManualXblToken
+        ? "Manual XAuth active" + (string.IsNullOrEmpty(XboxAuthService.ManualXuid) ? "" : $" (XUID: {XboxAuthService.ManualXuid})")
+        : "Using Microsoft login";
+
     partial void OnDarkModeEnabledChanged(bool value)
     {
         if (Application.Current != null)
@@ -140,5 +148,38 @@ public partial class SettingsPageViewModel : ObservableObject
         EventTokenText = "";
         XboxAuthService.ManualEventsToken = "";
         EventTokenStatus = "Using auto-generated token";
+    }
+
+    [RelayCommand]
+    private void SaveXblToken()
+    {
+        var token = XblTokenText?.Trim();
+
+        if (string.IsNullOrWhiteSpace(token))
+        {
+            XblTokenStatus = "Enter a token before saving";
+            return;
+        }
+
+        if (!token.Contains("XBL3.0") && !token.StartsWith("x:", StringComparison.OrdinalIgnoreCase))
+        {
+            XblTokenStatus = "Invalid token format (must be XBL3.0 x=...;...)";
+            return;
+        }
+
+        XboxAuthService.ManualXblToken = token;
+
+        var xuid = XboxAuthService.ManualXuid;
+        XblTokenStatus = string.IsNullOrEmpty(xuid)
+            ? "Manual XAuth saved (XUID not detected in token)"
+            : $"Manual XAuth saved (XUID: {xuid})";
+    }
+
+    [RelayCommand]
+    private void ClearXblToken()
+    {
+        XblTokenText = "";
+        XboxAuthService.ManualXblToken = "";
+        XblTokenStatus = "Using Microsoft login";
     }
 }
