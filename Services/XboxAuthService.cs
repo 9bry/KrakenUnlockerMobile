@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using Microsoft.Identity.Client;
+using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Storage;
 
 namespace KrakenMobile.Services;
@@ -99,7 +100,9 @@ public static class XboxAuthService
 
             if (authResult == null)
             {
-                authResult = await app.AcquireTokenInteractive(new[] { Scope }).ExecuteAsync();
+                authResult = await app.AcquireTokenInteractive(new[] { Scope })
+                    .WithParentActivityOrWindow(() => Platform.CurrentActivity)
+                    .ExecuteAsync();
             }
 
             var msaToken = authResult?.AccessToken;
