@@ -105,8 +105,7 @@
                      RefreshColor="#CC0000">
 
             <CollectionView ItemsSource="{Binding Achievements}"
-                            SelectionMode="None"
-                            EmptyViewTemplate="{StaticResource EmptyView}">
+                            SelectionMode="None">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="6" />
                 </CollectionView.ItemsLayout>

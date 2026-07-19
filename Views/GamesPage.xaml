@@ -68,8 +68,7 @@
             <CollectionView ItemsSource="{Binding Games}"
                             SelectionMode="Single"
                             SelectionChangedCommand="{Binding SelectGameCommand}"
-                            SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}"
-                            EmptyViewTemplate="{StaticResource EmptyView}">
+                            SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
                 </CollectionView.ItemsLayout>
