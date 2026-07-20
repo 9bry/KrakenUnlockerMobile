@@ -1,4 +1,7 @@
-﻿using KrakenMobile.Services;
+﻿using System.Threading.Tasks;
+using KrakenMobile.Services;
+using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Storage;
 
 namespace KrakenMobile;
 
@@ -12,6 +15,11 @@ public partial class App : Application
     {
         InitializeComponent();
         ThemeService.Initialize();
+
+        AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+            ShowFatal("Unhandled Exception", e.ExceptionObject?.ToString() ?? "Unknown");
+        TaskScheduler.UnobservedTaskException += (s, e) =>
+            ShowFatal("Unobserved Task Exception", e.Exception?.ToString() ?? "Unknown");
     }
 
     protected override Window CreateWindow(IActivationState? activationState)
@@ -33,7 +41,7 @@ public partial class App : Application
             var protection = ProtectionService.Check();
             if (protection.IsTampered)
             {
-                SilentShutdown();
+                ShowFatal("Protection", $"Tamper detected: {protection.GetSummary()}");
                 return;
             }
 
@@ -43,7 +51,7 @@ public partial class App : Application
             var integrityResult = await IntegrityService.CheckAsync();
             if (integrityResult == IntegrityResult.Tampered)
             {
-                SilentShutdown();
+                ShowFatal("Integrity", "Integrity check reported Tampered.");
                 return;
             }
 
@@ -68,46 +76,35 @@ public partial class App : Application
 
             _updateChecked = true;
         }
-        catch
+        catch (Exception ex)
         {
-            SilentShutdown();
+            ShowFatal("Startup Error", ex.ToString());
         }
     }
 
-    private static void SilentShutdown()
+    public static void ShowFatal(string title, string? message)
     {
         try
         {
-            ProtectionService.StopWatchdog();
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                try
+                {
+                    var page = Application.Current?.Windows?.FirstOrDefault()?.Page
+                               ?? Application.Current?.MainPage;
+                    if (page != null)
+                        await page.DisplayAlert(title, message ?? "", "OK");
+                }
+                catch { }
+            });
         }
         catch { }
 
         try
         {
-            var activity = Platform.CurrentActivity;
-            if (activity != null)
-            {
-                activity.RunOnUiThread(() =>
-                {
-                    try
-                    {
-                        activity.FinishAffinity();
-                        Java.Lang.JavaSystem.Exit(0);
-                    }
-                    catch
-                    {
-                        Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
-                    }
-                });
-            }
-            else
-            {
-                Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
-            }
+            var path = Path.Combine(FileSystem.AppDataDirectory, "crashlog.txt");
+            File.WriteAllText(path, $"[{title}]\n{message}\n");
         }
-        catch
-        {
-            Environment.Exit(1);
-        }
+        catch { }
     }
 }
