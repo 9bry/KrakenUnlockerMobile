@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using KrakenMobile.Services;
+using KrakenMobile.Views;
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Storage;
 
@@ -10,11 +11,22 @@ public partial class App : Application
     private static bool _securityPassed;
     private static bool _updateChecked;
     private static TaskCompletionSource? _securityBlocker;
+    private static Exception? _bootError;
 
     public App()
     {
-        InitializeComponent();
-        ThemeService.Initialize();
+        Exception? bootError = null;
+        try
+        {
+            InitializeComponent();
+            ThemeService.Initialize();
+        }
+        catch (Exception ex)
+        {
+            bootError = ex;
+        }
+
+        _bootError = bootError;
 
         AppDomain.CurrentDomain.UnhandledException += (s, e) =>
             ShowFatal("Unhandled Exception", e.ExceptionObject?.ToString() ?? "Unknown");
@@ -24,7 +36,18 @@ public partial class App : Application
 
     protected override Window CreateWindow(IActivationState? activationState)
     {
-        var window = new Window(new AppShell());
+        if (_bootError != null)
+            return new Window(new ErrorPage("App boot failed", _bootError.ToString()));
+
+        Window window;
+        try
+        {
+            window = new Window(new AppShell());
+        }
+        catch (Exception ex)
+        {
+            return new Window(new ErrorPage("Shell creation failed", ex.ToString()));
+        }
 
         window.Created += async (s, e) =>
         {
@@ -42,7 +65,7 @@ public partial class App : Application
             if (protection == null) return;
             if (protection.IsTampered)
             {
-                ShowFatal("Protection", $"Tamper detected: {protection.GetSummary()}");
+                FailToErrorPage(window, "Protection", $"Tamper detected: {protection.GetSummary()}");
                 return;
             }
 
@@ -57,7 +80,7 @@ public partial class App : Application
             if (integrityResult == null) return;
             if (integrityResult == IntegrityResult.Tampered)
             {
-                ShowFatal("Integrity", "Integrity check reported Tampered.");
+                FailToErrorPage(window, "Integrity", "Integrity check reported Tampered.");
                 return;
             }
 
@@ -68,7 +91,7 @@ public partial class App : Application
             if (updateResult.Severity == UpdateSeverity.Hard)
             {
                 _updateChecked = true;
-                var forcePage = new Views.ForceUpdatePage(
+                var forcePage = new ForceUpdatePage(
                     updateResult.LatestVersion,
                     updateResult.CurrentVersion,
                     updateResult.ReleaseNotes,
@@ -85,7 +108,7 @@ public partial class App : Application
         }
         catch (Exception ex)
         {
-            ShowFatal("Startup Error", ex.ToString());
+            FailToErrorPage(window, "Startup Error", ex.ToString());
         }
     }
 
@@ -97,7 +120,7 @@ public partial class App : Application
         }
         catch (Exception ex)
         {
-            ShowFatal($"Startup Fault: {label}", ex.ToString());
+            FailToErrorPage(Application.Current?.Windows?.FirstOrDefault(), $"Startup Fault: {label}", ex.ToString());
             return default;
         }
     }
@@ -110,21 +133,22 @@ public partial class App : Application
         }
         catch (Exception ex)
         {
-            ShowFatal($"Startup Fault: {label}", ex.ToString());
+            FailToErrorPage(Application.Current?.Windows?.FirstOrDefault(), $"Startup Fault: {label}", ex.ToString());
         }
     }
 
-
     public static void ShowFatal(string title, string? message)
     {
+        var window = Application.Current?.Windows?.FirstOrDefault();
+        FailToErrorPage(window, title, message);
+
         try
         {
             MainThread.BeginInvokeOnMainThread(async () =>
             {
                 try
                 {
-                    var page = Application.Current?.Windows?.FirstOrDefault()?.Page
-                               ?? Application.Current?.MainPage;
+                    var page = window?.Page;
                     if (page != null)
                         await page.DisplayAlert(title, message ?? "", "OK");
                 }
@@ -132,17 +156,43 @@ public partial class App : Application
             });
         }
         catch { }
+    }
 
+    private static void FailToErrorPage(Window? window, string title, string? message)
+    {
         try
         {
-            var path = Path.Combine(FileSystem.AppDataDirectory, "crashlog.txt");
-            File.WriteAllText(path, $"[{title}]\n{message}\n");
+            WriteCrashToExternal($"[{title}]\n{message}\n");
         }
         catch { }
 
         try
         {
-            WriteCrashToExternal($"[{title}]\n{message}\n");
+            if (window != null)
+            {
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    try
+                    {
+                        window.Page = new ErrorPage(title, message ?? "");
+                    }
+                    catch { }
+                });
+            }
+        }
+        catch { }
+    }
+
+    public static void ShowErrorOnScreen(Exception? ex)
+    {
+        var msg = ex?.ToString() ?? "Unknown";
+        WriteCrashToExternal("[Native UnhandledException]\n" + msg);
+
+        try
+        {
+            var window = Application.Current?.Windows?.FirstOrDefault();
+            if (window != null)
+                window.Page = new ErrorPage("Native Crash", msg);
         }
         catch { }
     }
