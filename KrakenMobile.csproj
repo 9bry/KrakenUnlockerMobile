@@ -48,9 +48,12 @@
 		<!-- Android Signing (secrets sourced from gitignored props / env, never committed) -->
 		<AndroidKeyStore>True</AndroidKeyStore>
 
-		<!-- Hardening: shrink/optimize the Android (Java) layer -->
+		<!-- Hardening disabled: R8/trimming + AOT was stripping types the
+		     startup security pipeline depends on, causing an immediate crash. -->
 		<AndroidLinkTool>r8</AndroidLinkTool>
-		<EnableAndroidLinking>true</EnableAndroidLinking>
+		<EnableAndroidLinking>false</EnableAndroidLinking>
+		<PublishTrimmed>false</PublishTrimmed>
+		<RunAOTCompilation>false</RunAOTCompilation>
 	</PropertyGroup>
 
 	<!-- Local signing secrets; gitignored, must not be committed -->
