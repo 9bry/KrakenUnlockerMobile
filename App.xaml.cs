@@ -157,6 +157,14 @@ public partial class App : Application
             var ext = Path.Combine(dir.AbsolutePath, "crashlog.txt");
             File.WriteAllText(ext, text);
         }
+
+        try
+        {
+            var dl = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads);
+            if (dl != null)
+                File.WriteAllText(System.IO.Path.Combine(dl.AbsolutePath, "kraken_crashlog.txt"), text);
+        }
+        catch { }
 #endif
     }
 }

@@ -22,6 +22,15 @@ public class MainActivity : MauiAppCompatActivity
                     var ext = System.IO.Path.Combine(dir.AbsolutePath, "crashlog.txt");
                     System.IO.File.WriteAllText(ext, "[Native UnhandledException]\n" + (e.Exception?.ToString() ?? "Unknown") + "\n");
                 }
+
+                try
+                {
+                    var dl = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads);
+                    if (dl != null)
+                        System.IO.File.WriteAllText(System.IO.Path.Combine(dl.AbsolutePath, "kraken_crashlog.txt"),
+                            "[Native UnhandledException]\n" + (e.Exception?.ToString() ?? "Unknown") + "\n");
+                }
+                catch { }
             }
             catch { }
         };
