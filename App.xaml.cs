@@ -38,17 +38,23 @@ public partial class App : Application
     {
         try
         {
-            var protection = ProtectionService.Check();
+            var protection = await SafeStep("Protection", () => Task.FromResult(ProtectionService.Check()));
+            if (protection == null) return;
             if (protection.IsTampered)
             {
                 ShowFatal("Protection", $"Tamper detected: {protection.GetSummary()}");
                 return;
             }
 
-            ProtectionService.LockSignature();
-            ProtectionService.Initialize();
+            await SafeStep("Protection.LockSignature", () =>
+            {
+                ProtectionService.LockSignature();
+                ProtectionService.Initialize();
+                return Task.CompletedTask;
+            });
 
-            var integrityResult = await IntegrityService.CheckAsync();
+            var integrityResult = await SafeStep("Integrity", () => IntegrityService.CheckAsync());
+            if (integrityResult == null) return;
             if (integrityResult == IntegrityResult.Tampered)
             {
                 ShowFatal("Integrity", "Integrity check reported Tampered.");
@@ -57,7 +63,8 @@ public partial class App : Application
 
             _securityPassed = true;
 
-            var updateResult = await UpdateService.CheckForUpdateAsync();
+            var updateResult = await SafeStep("Update", () => UpdateService.CheckForUpdateAsync());
+            if (updateResult == null) return;
             if (updateResult.Severity == UpdateSeverity.Hard)
             {
                 _updateChecked = true;
@@ -81,6 +88,32 @@ public partial class App : Application
             ShowFatal("Startup Error", ex.ToString());
         }
     }
+
+    private static async Task<T?> SafeStep<T>(string label, Func<Task<T>> step)
+    {
+        try
+        {
+            return await step();
+        }
+        catch (Exception ex)
+        {
+            ShowFatal($"Startup Fault: {label}", ex.ToString());
+            return default;
+        }
+    }
+
+    private static async Task SafeStep(string label, Func<Task> step)
+    {
+        try
+        {
+            await step();
+        }
+        catch (Exception ex)
+        {
+            ShowFatal($"Startup Fault: {label}", ex.ToString());
+        }
+    }
+
 
     public static void ShowFatal(string title, string? message)
     {
