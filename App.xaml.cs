@@ -139,5 +139,24 @@ public partial class App : Application
             File.WriteAllText(path, $"[{title}]\n{message}\n");
         }
         catch { }
+
+        try
+        {
+            WriteCrashToExternal($"[{title}]\n{message}\n");
+        }
+        catch { }
+    }
+
+    private static void WriteCrashToExternal(string text)
+    {
+#if ANDROID
+        var ctx = Android.App.Application.Context;
+        var dir = ctx?.GetExternalFilesDir(null);
+        if (dir != null)
+        {
+            var ext = Path.Combine(dir.AbsolutePath, "crashlog.txt");
+            File.WriteAllText(ext, text);
+        }
+#endif
     }
 }

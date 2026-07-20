@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Android.Runtime;
 
 namespace KrakenMobile;
 
@@ -11,6 +12,20 @@ public class MainActivity : MauiAppCompatActivity
 
     protected override void OnCreate(Bundle? savedInstanceState)
     {
+        AndroidEnvironment.UnhandledExceptionRaiser += (s, e) =>
+        {
+            try
+            {
+                var dir = Android.App.Application.Context?.GetExternalFilesDir(null);
+                if (dir != null)
+                {
+                    var ext = System.IO.Path.Combine(dir.AbsolutePath, "crashlog.txt");
+                    System.IO.File.WriteAllText(ext, "[Native UnhandledException]\n" + (e.Exception?.ToString() ?? "Unknown") + "\n");
+                }
+            }
+            catch { }
+        };
+
         base.OnCreate(savedInstanceState);
         CurrentActivity = this;
     }
