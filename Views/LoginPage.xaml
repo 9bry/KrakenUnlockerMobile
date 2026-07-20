@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KrakenMobile.Views.LoginPage"
-             BackgroundColor="#0A0A0A">
+             BackgroundColor="{DynamicResource KrakenBackground}">
 
     <ScrollView>
         <VerticalStackLayout Spacing="0" Padding="32" VerticalOptions="Center">
@@ -16,12 +16,12 @@
 
             <Label Text="Xbox Achievement Unlocker"
                    FontSize="14"
-                   TextColor="#888888"
+                   TextColor="{DynamicResource KrakenTextSecondary}"
                    HorizontalOptions="Center"
                    Margin="0,0,0,48" />
 
-            <Border BackgroundColor="#141414"
-                    Stroke="#222222"
+            <Border BackgroundColor="{DynamicResource KrakenCard}"
+                    Stroke="{DynamicResource KrakenBorder}"
                     StrokeThickness="1"
                     StrokeShape="RoundRectangle 12"
                     Padding="24"
@@ -35,7 +35,7 @@
 
                     <Label Text="Sign in with your Xbox Live account to access your games and achievements."
                            FontSize="13"
-                           TextColor="#888888"
+                           TextColor="{DynamicResource KrakenTextSecondary}"
                            Margin="0,0,0,8" />
 
                     <Button Text="Sign in with Xbox"
@@ -52,7 +52,7 @@
 
                     <Label Text="{Binding StatusText}"
                            FontSize="13"
-                           TextColor="#888888"
+                           TextColor="{DynamicResource KrakenTextSecondary}"
                            HorizontalOptions="Center"
                            HorizontalTextAlignment="Center"
                            Margin="0,4,0,0" />
@@ -62,7 +62,7 @@
 
             <Label x:Name="VersionLabel"
                    FontSize="11"
-                   TextColor="#444444"
+                   TextColor="{DynamicResource KrakenTextTertiary}"
                    HorizontalOptions="Center"
                    Margin="0,16,0,0" />
 

@@ -54,6 +54,7 @@ public partial class GamesPageViewModel : ObservableObject
 
         try
         {
+            await XboxAuthService.EnsureXuidAsync();
             _api.RefreshClient();
             var games = await _api.GetGamesListAsync();
             Games.Clear();

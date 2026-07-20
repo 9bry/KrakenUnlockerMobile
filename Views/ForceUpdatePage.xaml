@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KrakenMobile.Views.ForceUpdatePage"
-             BackgroundColor="#0A0A0A"
+             BackgroundColor="{DynamicResource KrakenBackground}"
              Shell.NavBarIsVisible="False"
              NavigationPage.HasBackButton="False"
              Title="Update Required">
@@ -24,7 +24,7 @@
             <!-- Update Required Title -->
             <Label Text="UPDATE REQUIRED"
                    FontSize="24" FontAttributes="Bold"
-                   TextColor="#FFFFFF" HorizontalOptions="Center"
+                   TextColor="{DynamicResource KrakenTextPrimary}" HorizontalOptions="Center"
                    Margin="0,0,0,16" />
 
             <!-- Divider -->
@@ -37,7 +37,7 @@
 
             <!-- Version Info Card -->
             <Border BackgroundColor="#111111"
-                    Stroke="#222222"
+                    Stroke="{DynamicResource KrakenBorder}"
                     StrokeThickness="1"
                     StrokeShape="RoundRectangle 12"
                     Padding="20" Margin="0,0,0,32">
@@ -45,7 +45,7 @@
                     <Grid ColumnDefinitions="*,Auto">
                         <Label Grid.Column="0" Text="Current Version" FontSize="13" TextColor="#666666" />
                         <Label Grid.Column="1" x:Name="CurrentVersionLabel" Text="v1.0"
-                               FontSize="13" TextColor="#888888" />
+                               FontSize="13" TextColor="{DynamicResource KrakenTextSecondary}" />
                     </Grid>
                     <Grid ColumnDefinitions="*,Auto">
                         <Label Grid.Column="0" Text="Latest Version" FontSize="13" TextColor="#666666" />
@@ -57,7 +57,7 @@
 
             <!-- Release Notes -->
             <Border BackgroundColor="#111111"
-                    Stroke="#222222"
+                    Stroke="{DynamicResource KrakenBorder}"
                     StrokeThickness="1"
                     StrokeShape="RoundRectangle 12"
                     Padding="20" Margin="0,0,0,32"
@@ -76,7 +76,7 @@
             <Button x:Name="DownloadButton"
                     Text="DOWNLOAD UPDATE"
                     BackgroundColor="#CC0000"
-                    TextColor="#FFFFFF"
+                    TextColor="{DynamicResource KrakenTextPrimary}"
                     FontAttributes="Bold"
                     FontSize="16"
                     CornerRadius="12"
@@ -87,8 +87,8 @@
             <!-- Exit Button -->
             <Button x:Name="ExitButton"
                     Text="EXIT"
-                    BackgroundColor="#1A1A1A"
-                    TextColor="#888888"
+                    BackgroundColor="{DynamicResource KrakenCardHighlight}"
+                    TextColor="{DynamicResource KrakenTextSecondary}"
                     FontSize="14"
                     CornerRadius="12"
                     HeightRequest="48"
@@ -96,7 +96,7 @@
 
             <!-- Footer -->
             <Label Text="You must update to use Kraken"
-                   FontSize="11" TextColor="#444444"
+                   FontSize="11" TextColor="{DynamicResource KrakenTextTertiary}"
                    HorizontalOptions="Center" Margin="0,32,0,0" />
 
         </VerticalStackLayout>

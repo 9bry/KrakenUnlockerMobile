@@ -64,6 +64,7 @@ public partial class HomePageViewModel : ObservableObject
 
         try
         {
+            await XboxAuthService.EnsureXuidAsync();
             var api = new XboxApiService();
             var (gamertag, xuid, profilePic, gs, bio, tier) = await api.GetProfileAsync();
             GamerTag = gamertag;

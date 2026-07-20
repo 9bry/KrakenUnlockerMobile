@@ -3,15 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:KrakenMobile.ViewModels"
              x:Class="KrakenMobile.Views.AchievementsPage"
-             BackgroundColor="#0A0A0A"
+             BackgroundColor="{DynamicResource KrakenBackground}"
              Title="Achievements">
 
     <Grid RowDefinitions="Auto,Auto,Auto,*">
 
         <!-- Game Header Card -->
         <Border Grid.Row="0"
-                BackgroundColor="#1A0505"
-                Stroke="#440B0B"
+                BackgroundColor="{DynamicResource KrakenStatBg}"
+                Stroke="{DynamicResource KrakenStatBorder}"
                 StrokeThickness="1"
                 StrokeShape="RoundRectangle 10"
                 Padding="16"
@@ -21,12 +21,12 @@
 
                 <!-- Game Box Art -->
                 <Border Grid.Column="0"
-                        Stroke="#440B0B"
+                        Stroke="{DynamicResource KrakenStatBorder}"
                         StrokeThickness="1"
                         StrokeShape="RoundRectangle 8"
                         WidthRequest="60"
                         HeightRequest="60"
-                        BackgroundColor="#0D0D0D"
+                        BackgroundColor="{DynamicResource KrakenCardDark}"
                          ><!-- ClipToBounds removed -->
                     <Image Source="{Binding GameImage}"
                            Aspect="AspectFill"
@@ -39,11 +39,11 @@
                     <Label Text="{Binding GameName}"
                            FontSize="16"
                            FontAttributes="Bold"
-                           TextColor="#FFFFFF"
+                           TextColor="{DynamicResource KrakenTextPrimary}"
                            LineBreakMode="TailTruncation" />
                     <Label Text="{Binding GameInfo}"
                            FontSize="12"
-                           TextColor="#888888" />
+                           TextColor="{DynamicResource KrakenTextSecondary}" />
                 </VerticalStackLayout>
             </Grid>
         </Border>
@@ -53,9 +53,10 @@
                 BackgroundColor="#1A1400"
                 Stroke="#4D3800"
                 StrokeThickness="1"
-                StrokeShape="RoundRectangle 8"
-                Padding="12,10"
-                Margin="16,8,16,0">
+                 StrokeShape="RoundRectangle 8"
+                 Padding="12,10"
+                 Margin="16,8,16,0"
+                 IsVisible="{Binding IsEventBased}">
 
             <VerticalStackLayout Spacing="2">
                 <Label Text="EVENT-BASED ACHIEVEMENTS"
@@ -69,8 +70,8 @@
 
         <!-- Controls Bar -->
         <Border Grid.Row="2"
-                BackgroundColor="#141414"
-                Stroke="#222222"
+                BackgroundColor="{DynamicResource KrakenCard}"
+                Stroke="{DynamicResource KrakenBorder}"
                 StrokeThickness="0,0,0,1"
                 Padding="16,10"
                 Margin="16,8,16,0">
@@ -79,11 +80,11 @@
 
                 <SearchBar Grid.Column="0"
                            Placeholder="Search achievements..."
-                           PlaceholderColor="#555555"
-                           TextColor="#FFFFFF"
-                           BackgroundColor="#0D0D0D"
+                           PlaceholderColor="{DynamicResource KrakenTextTertiary}"
+                           TextColor="{DynamicResource KrakenTextPrimary}"
+                           BackgroundColor="{DynamicResource KrakenCardDark}"
                            FontSize="14"
-                           CancelButtonColor="#888888"
+                           CancelButtonColor="{DynamicResource KrakenTextSecondary}"
                            Text="{Binding SearchText}" />
 
                 <Button Grid.Column="1"
@@ -118,11 +119,11 @@
                             <Label Text="No achievements"
                                    FontSize="18"
                                    FontAttributes="Bold"
-                                   TextColor="#FFFFFF"
+                                   TextColor="{DynamicResource KrakenTextPrimary}"
                                    HorizontalOptions="Center" />
                             <Label Text="Select a game from the Games tab first."
                                    FontSize="13"
-                                   TextColor="#888888"
+                                   TextColor="{DynamicResource KrakenTextSecondary}"
                                    HorizontalOptions="Center"
                                    HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
@@ -130,8 +131,8 @@
                 </CollectionView.EmptyViewTemplate>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Border BackgroundColor="#141414"
-                                Stroke="#222222"
+                        <Border BackgroundColor="{DynamicResource KrakenCard}"
+                                Stroke="{DynamicResource KrakenBorder}"
                                 StrokeThickness="1"
                                 StrokeShape="RoundRectangle 8"
                                 Padding="14,12"
@@ -145,13 +146,13 @@
                                     <Label Text="{Binding Name}"
                                            FontSize="14"
                                            FontAttributes="Bold"
-                                           TextColor="#FFFFFF"
+                                           TextColor="{DynamicResource KrakenTextPrimary}"
                                            LineBreakMode="TailTruncation"
                                            MaxLines="1" />
 
                                     <Label Text="{Binding Description}"
                                            FontSize="12"
-                                           TextColor="#888888"
+                                           TextColor="{DynamicResource KrakenTextSecondary}"
                                            LineBreakMode="TailTruncation"
                                            MaxLines="2" />
 
@@ -170,7 +171,7 @@
                                         <Label Grid.Column="2"
                                                Text="{Binding RarityCategory}"
                                                FontSize="11"
-                                               TextColor="#888888"
+                                               TextColor="{DynamicResource KrakenTextSecondary}"
                                                IsVisible="{Binding IsSecret, Converter={StaticResource InvertBoolConverter}}" />
                                     </Grid>
                                 </VerticalStackLayout>
@@ -179,7 +180,7 @@
                                 <Button Grid.Column="1"
                                         Text="{Binding IsUnlockable, Converter={StaticResource UnlockButtonConverter}}"
                                         BackgroundColor="{Binding ProgressState, Converter={StaticResource UnlockBgConverter}}"
-                                        TextColor="#FFFFFF"
+                                        TextColor="{DynamicResource KrakenTextPrimary}"
                                         FontSize="18"
                                         CornerRadius="8"
                                         WidthRequest="48"

@@ -4,24 +4,6 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <Color x:Key="KrakenBackground">#0A0A0A</Color>
-    <Color x:Key="KrakenBackgroundDark">#050505</Color>
-    <Color x:Key="KrakenAccent">#CC0000</Color>
-    <Color x:Key="KrakenAccentLight">#FF0033</Color>
-    <Color x:Key="KrakenAccentGlow">#FF3344</Color>
-    <Color x:Key="KrakenAccentDark">#990000</Color>
-    <Color x:Key="KrakenCard">#141414</Color>
-    <Color x:Key="KrakenCardDark">#0D0D0D</Color>
-    <Color x:Key="KrakenCardHighlight">#1A1A1A</Color>
-    <Color x:Key="KrakenBorder">#222222</Color>
-    <Color x:Key="KrakenBorderRed">#3A1010</Color>
-    <Color x:Key="KrakenTextPrimary">#FFFFFF</Color>
-    <Color x:Key="KrakenTextSecondary">#888888</Color>
-    <Color x:Key="KrakenTextTertiary">#555555</Color>
-    <Color x:Key="KrakenRedGlow">#FF0033</Color>
-    <Color x:Key="KrakenStatBg">#1A0505</Color>
-    <Color x:Key="KrakenStatBorder">#440B0B</Color>
-
     <Color x:Key="Primary">#CC0000</Color>
     <Color x:Key="PrimaryDark">#990000</Color>
     <Color x:Key="PrimaryDarkText">#FFFFFF</Color>

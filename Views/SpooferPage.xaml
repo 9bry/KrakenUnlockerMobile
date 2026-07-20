@@ -3,15 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:KrakenMobile.ViewModels"
              x:Class="KrakenMobile.Views.SpooferPage"
-             BackgroundColor="#0A0A0A"
+             BackgroundColor="{DynamicResource KrakenBackground}"
              Title="Spoofer">
 
     <ScrollView>
         <VerticalStackLayout Spacing="0" Padding="16,16">
 
             <!-- Current Spoof Status -->
-            <Border BackgroundColor="#141414"
-                    Stroke="#222222"
+            <Border BackgroundColor="{DynamicResource KrakenCard}"
+                    Stroke="{DynamicResource KrakenBorder}"
                     StrokeThickness="1"
                     StrokeShape="RoundRectangle 12"
                     Padding="16"
@@ -29,7 +29,7 @@
                                 StrokeShape="RoundRectangle 10"
                                 WidthRequest="44"
                                 HeightRequest="44"
-                                BackgroundColor="#1A0505"
+                                BackgroundColor="{DynamicResource KrakenStatBg}"
                                 VerticalOptions="Center">
                             <Label Text="{Binding SpoofingStatusIcon}"
                                    FontSize="20"
@@ -41,10 +41,10 @@
                             <Label Text="{Binding SpoofingStatus}"
                                    FontSize="15"
                                    FontAttributes="Bold"
-                                   TextColor="#FFFFFF" />
+                                   TextColor="{DynamicResource KrakenTextPrimary}" />
                             <Label Text="{Binding CurrentSpoofGame}"
                                    FontSize="12"
-                                   TextColor="#888888"
+                                   TextColor="{DynamicResource KrakenTextSecondary}"
                                    LineBreakMode="TailTruncation" />
                         </VerticalStackLayout>
                     </Grid>
@@ -52,8 +52,8 @@
             </Border>
 
             <!-- Game Search Input -->
-            <Border BackgroundColor="#141414"
-                    Stroke="#222222"
+            <Border BackgroundColor="{DynamicResource KrakenCard}"
+                    Stroke="{DynamicResource KrakenBorder}"
                     StrokeThickness="1"
                     StrokeShape="RoundRectangle 12"
                     Padding="16"
@@ -65,9 +65,9 @@
                            FontSize="11" />
 
                     <Entry Placeholder="Enter Title ID or game name..."
-                           PlaceholderColor="#555555"
-                           TextColor="#FFFFFF"
-                           BackgroundColor="#0D0D0D"
+                           PlaceholderColor="{DynamicResource KrakenTextTertiary}"
+                           TextColor="{DynamicResource KrakenTextPrimary}"
+                           BackgroundColor="{DynamicResource KrakenCardDark}"
                            FontSize="14"
                            Text="{Binding GameSearchText}" />
 
@@ -79,8 +79,8 @@
             </Border>
 
             <!-- Game Info Card -->
-            <Border BackgroundColor="#141414"
-                    Stroke="#222222"
+            <Border BackgroundColor="{DynamicResource KrakenCard}"
+                    Stroke="{DynamicResource KrakenBorder}"
                     StrokeThickness="1"
                     StrokeShape="RoundRectangle 12"
                     Padding="16"
@@ -101,7 +101,7 @@
                             <Label Text="{Binding GameTitleId}"
                                    FontSize="14"
                                    FontAttributes="Bold"
-                                   TextColor="#FFFFFF" />
+                                   TextColor="{DynamicResource KrakenTextPrimary}" />
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
@@ -111,7 +111,7 @@
                             <Label Text="{Binding GameGamerscore}"
                                    FontSize="14"
                                    FontAttributes="Bold"
-                                   TextColor="#FFFFFF" />
+                                   TextColor="{DynamicResource KrakenTextPrimary}" />
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
@@ -120,7 +120,7 @@
                                    FontSize="10" />
                             <Label Text="{Binding GameName}"
                                    FontSize="13"
-                                   TextColor="#FFFFFF"
+                                   TextColor="{DynamicResource KrakenTextPrimary}"
                                    LineBreakMode="TailTruncation" />
                         </VerticalStackLayout>
 
@@ -130,15 +130,15 @@
                                    FontSize="10" />
                             <Label Text="{Binding GameType}"
                                    FontSize="13"
-                                   TextColor="#FFFFFF" />
+                                   TextColor="{DynamicResource KrakenTextPrimary}" />
                         </VerticalStackLayout>
                     </Grid>
                 </VerticalStackLayout>
             </Border>
 
             <!-- Heartbeat Indicator -->
-            <Border BackgroundColor="#141414"
-                    Stroke="#222222"
+            <Border BackgroundColor="{DynamicResource KrakenCard}"
+                    Stroke="{DynamicResource KrakenBorder}"
                     StrokeThickness="1"
                     StrokeShape="RoundRectangle 12"
                     Padding="16"
@@ -169,7 +169,7 @@
                         <Label Grid.Column="1"
                                Text="{Binding HeartbeatStatus}"
                                FontSize="13"
-                               TextColor="#888888"
+                               TextColor="{DynamicResource KrakenTextSecondary}"
                                VerticalOptions="Center" />
                     </Grid>
                 </VerticalStackLayout>

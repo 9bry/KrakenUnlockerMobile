@@ -3,15 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:KrakenMobile.ViewModels"
              x:Class="KrakenMobile.Views.HomePage"
-             BackgroundColor="#0A0A0A"
+             BackgroundColor="{DynamicResource KrakenBackground}"
              Title="Home">
 
     <ScrollView>
         <VerticalStackLayout Spacing="0" Padding="20,16">
 
             <!-- Profile Hero Card -->
-            <Border BackgroundColor="#141414"
-                    Stroke="#222222"
+            <Border BackgroundColor="{DynamicResource KrakenCard}"
+                    Stroke="{DynamicResource KrakenBorder}"
                     StrokeThickness="1"
                     StrokeShape="RoundRectangle 12"
                     Padding="20"
@@ -26,7 +26,7 @@
                             StrokeShape="RoundRectangle 40"
                             WidthRequest="80"
                             HeightRequest="80"
-                            BackgroundColor="#1A0505">
+                            BackgroundColor="{DynamicResource KrakenStatBg}">
                         <Image Source="{Binding GamerPic}"
                                Aspect="AspectFill" />
                     </Border>
@@ -39,11 +39,11 @@
                         <Label Text="{Binding GamerTag}"
                                FontSize="22"
                                FontAttributes="Bold"
-                               TextColor="#FFFFFF"
+                               TextColor="{DynamicResource KrakenTextPrimary}"
                                LineBreakMode="TailTruncation" />
                         <Label Text="{Binding XuidDisplay}"
                                FontSize="12"
-                               TextColor="#888888"
+                               TextColor="{DynamicResource KrakenTextSecondary}"
                                LineBreakMode="TailTruncation" />
                     </VerticalStackLayout>
                 </Grid>
@@ -59,8 +59,8 @@
 
                 <!-- Unlock All Card -->
                 <Border Grid.Column="0"
-                        BackgroundColor="#1A0505"
-                        Stroke="#440B0B"
+                        BackgroundColor="{DynamicResource KrakenStatBg}"
+                        Stroke="{DynamicResource KrakenStatBorder}"
                         StrokeThickness="1"
                         StrokeShape="RoundRectangle 10"
                         Padding="12"
@@ -72,12 +72,12 @@
                         <Label Text="Unlock All"
                                FontSize="12"
                                FontAttributes="Bold"
-                               TextColor="#FFFFFF"
+                               TextColor="{DynamicResource KrakenTextPrimary}"
                                HorizontalOptions="Center"
                                HorizontalTextAlignment="Center" />
                         <Label Text="All achievements"
                                FontSize="9"
-                               TextColor="#888888"
+                               TextColor="{DynamicResource KrakenTextSecondary}"
                                HorizontalOptions="Center"
                                HorizontalTextAlignment="Center" />
                     </VerticalStackLayout>
@@ -85,8 +85,8 @@
 
                 <!-- Games Card -->
                 <Border Grid.Column="1"
-                        BackgroundColor="#1A0505"
-                        Stroke="#440B0B"
+                        BackgroundColor="{DynamicResource KrakenStatBg}"
+                        Stroke="{DynamicResource KrakenStatBorder}"
                         StrokeThickness="1"
                         StrokeShape="RoundRectangle 10"
                         Padding="12"
@@ -98,12 +98,12 @@
                         <Label Text="Games"
                                FontSize="12"
                                FontAttributes="Bold"
-                               TextColor="#FFFFFF"
+                               TextColor="{DynamicResource KrakenTextPrimary}"
                                HorizontalOptions="Center"
                                HorizontalTextAlignment="Center" />
                         <Label Text="{Binding GameCount}"
                                FontSize="9"
-                               TextColor="#888888"
+                               TextColor="{DynamicResource KrakenTextSecondary}"
                                HorizontalOptions="Center"
                                HorizontalTextAlignment="Center" />
                     </VerticalStackLayout>
@@ -111,8 +111,8 @@
 
                 <!-- Achievements Card -->
                 <Border Grid.Column="2"
-                        BackgroundColor="#1A0505"
-                        Stroke="#440B0B"
+                        BackgroundColor="{DynamicResource KrakenStatBg}"
+                        Stroke="{DynamicResource KrakenStatBorder}"
                         StrokeThickness="1"
                         StrokeShape="RoundRectangle 10"
                         Padding="12"
@@ -124,12 +124,12 @@
                         <Label Text="Achievements"
                                FontSize="12"
                                FontAttributes="Bold"
-                               TextColor="#FFFFFF"
+                               TextColor="{DynamicResource KrakenTextPrimary}"
                                HorizontalOptions="Center"
                                HorizontalTextAlignment="Center" />
                         <Label Text="View all"
                                FontSize="9"
-                               TextColor="#888888"
+                               TextColor="{DynamicResource KrakenTextSecondary}"
                                HorizontalOptions="Center"
                                HorizontalTextAlignment="Center" />
                     </VerticalStackLayout>
@@ -137,8 +137,8 @@
             </Grid>
 
             <!-- Stats Card -->
-            <Border BackgroundColor="#141414"
-                    Stroke="#222222"
+            <Border BackgroundColor="{DynamicResource KrakenCard}"
+                    Stroke="{DynamicResource KrakenBorder}"
                     StrokeThickness="1"
                     StrokeShape="RoundRectangle 12"
                     Padding="16"
@@ -187,8 +187,8 @@
             </Border>
 
             <!-- Status / Log Section -->
-            <Border BackgroundColor="#141414"
-                    Stroke="#222222"
+            <Border BackgroundColor="{DynamicResource KrakenCard}"
+                    Stroke="{DynamicResource KrakenBorder}"
                     StrokeThickness="1"
                     StrokeShape="RoundRectangle 12"
                     Padding="16">
@@ -200,7 +200,7 @@
 
                     <Label Text="{Binding StatusText}"
                            FontSize="13"
-                           TextColor="#888888"
+                           TextColor="{DynamicResource KrakenTextSecondary}"
                            MaxLines="4" />
                 </VerticalStackLayout>
             </Border>

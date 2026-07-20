@@ -57,10 +57,7 @@ public partial class SettingsPageViewModel : ObservableObject
 
     partial void OnDarkModeEnabledChanged(bool value)
     {
-        if (Application.Current != null)
-        {
-            Application.Current.UserAppTheme = value ? AppTheme.Dark : AppTheme.Light;
-        }
+        ThemeService.IsDarkMode = value;
     }
 
     partial void OnIsLoggedInChanged(bool value)
@@ -71,6 +68,7 @@ public partial class SettingsPageViewModel : ObservableObject
 
     public SettingsPageViewModel()
     {
+        DarkModeEnabled = ThemeService.IsDarkMode;
         IsLoggedIn = XboxAuthService.IsLoggedIn;
         UpdateLoginState();
     }
@@ -151,7 +149,7 @@ public partial class SettingsPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void SaveXblToken()
+    private async Task SaveXblToken()
     {
         var token = XblTokenText?.Trim();
 
@@ -169,9 +167,10 @@ public partial class SettingsPageViewModel : ObservableObject
 
         XboxAuthService.ManualXblToken = token;
 
+        await XboxAuthService.EnsureXuidAsync();
         var xuid = XboxAuthService.ManualXuid;
         XblTokenStatus = string.IsNullOrEmpty(xuid)
-            ? "Manual XAuth saved (XUID not detected in token)"
+            ? "Manual XAuth saved (resolving XUID...)"
             : $"Manual XAuth saved (XUID: {xuid})";
     }
 

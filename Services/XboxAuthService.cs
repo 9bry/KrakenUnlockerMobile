@@ -100,9 +100,15 @@ public static class XboxAuthService
 
             if (authResult == null)
             {
+#if ANDROID
+                authResult = await app.AcquireTokenInteractive(new[] { Scope })
+                    .WithParentActivityOrWindow(() => KrakenMobile.MainActivity.CurrentActivity)
+                    .ExecuteAsync();
+#else
                 authResult = await app.AcquireTokenInteractive(new[] { Scope })
                     .WithParentActivityOrWindow(() => Platform.CurrentActivity)
                     .ExecuteAsync();
+#endif
             }
 
             var msaToken = authResult?.AccessToken;
@@ -222,25 +228,107 @@ public static class XboxAuthService
     private static string? ParseXuidFromXbl(string? token)
     {
         if (string.IsNullOrWhiteSpace(token)) return null;
+
+        var candidate = token;
+        var semi = token.IndexOf(';');
+        if (semi >= 0)
+            candidate = token.Substring(semi + 1);
+        candidate = candidate.Trim();
+
+        var parts = candidate.Split(new[] { ' ', '\t', '\r', '\n', ',' }, StringSplitOptions.RemoveEmptyEntries);
+        foreach (var part in parts)
+        {
+            var x = TryExtractXuidFromJwt(part);
+            if (!string.IsNullOrEmpty(x)) return x;
+        }
+
+        return TryExtractXuidFromJwt(candidate);
+    }
+
+    private static string? TryExtractXuidFromJwt(string part)
+    {
+        if (string.IsNullOrWhiteSpace(part) || part.IndexOf('.') < 0)
+            return null;
+
+        foreach (var seg in part.Split('.'))
+        {
+            try
+            {
+                var pad = seg.Length % 4 == 0 ? "" : new string('=', 4 - (seg.Length % 4));
+                var raw = Convert.FromBase64String(seg.Replace('-', '+').Replace('_', '/') + pad);
+                var json = Encoding.UTF8.GetString(raw);
+                using var doc = JsonDocument.Parse(json);
+                var x = FindXuid(doc.RootElement);
+                if (!string.IsNullOrEmpty(x)) return x;
+            }
+            catch { }
+        }
+
+        return null;
+    }
+
+    private static string? FindXuid(JsonElement el)
+    {
+        switch (el.ValueKind)
+        {
+            case JsonValueKind.Object:
+                foreach (var p in el.EnumerateObject())
+                {
+                    if (string.Equals(p.Name, "xid", StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(p.Name, "xuid", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var v = p.Value.ToString();
+                        if (!string.IsNullOrEmpty(v) && v != "0")
+                            return v;
+                    }
+
+                    var r = FindXuid(p.Value);
+                    if (!string.IsNullOrEmpty(r)) return r;
+                }
+                break;
+
+            case JsonValueKind.Array:
+                foreach (var item in el.EnumerateArray())
+                {
+                    var r = FindXuid(item);
+                    if (!string.IsNullOrEmpty(r)) return r;
+                }
+                break;
+        }
+
+        return null;
+    }
+
+    public static async Task<string?> ResolveXuidFromProfileAsync(string? token)
+    {
+        if (string.IsNullOrWhiteSpace(token)) return null;
         try
         {
-            var afterPrefix = token.Contains(';') ? token.Substring(token.IndexOf(';') + 1) : token;
-            var jwt = afterPrefix.Trim();
-            var segments = jwt.Split('.');
-            var payloadSeg = segments.Length >= 2 ? segments[1] : jwt;
+            var api = new XboxRestApi(token);
+            var profile = await api.GetBasicProfileAsync();
+            var user = profile?.ProfileUsers?.FirstOrDefault();
+            if (user != null && !string.IsNullOrEmpty(user.Id))
+                return user.Id;
 
-            var pad = payloadSeg.Length % 4 == 0 ? "" : new string('=', 4 - (payloadSeg.Length % 4));
-            var json = Encoding.UTF8.GetString(
-                Convert.FromBase64String(payloadSeg.Replace('-', '+').Replace('_', '/') + pad));
-
-            using var doc = JsonDocument.Parse(json);
-            var xui = doc.RootElement
-                .GetProperty("DisplayClaims").GetProperty("xui")[0];
-            if (xui.TryGetProperty("xid", out var xid))
-                return xid.GetString();
+            var xuidSetting = user?.Settings?
+                .FirstOrDefault(s => string.Equals(s.Id, "Xuid", StringComparison.OrdinalIgnoreCase));
+            if (xuidSetting?.Value != null)
+                return xuidSetting.Value.ToString();
         }
         catch { }
         return null;
+    }
+
+    public static async Task EnsureXuidAsync()
+    {
+        if (HasManualXblToken && string.IsNullOrEmpty(_manualXuid))
+        {
+            _manualXuid = await ResolveXuidFromProfileAsync(_manualXblToken);
+        }
+        else if (!string.IsNullOrEmpty(_cachedXblToken) && string.IsNullOrEmpty(_cachedXuid))
+        {
+            _cachedXuid = await ResolveXuidFromProfileAsync(_cachedXblToken);
+        }
     }
 
     public static string? GetEventsToken()

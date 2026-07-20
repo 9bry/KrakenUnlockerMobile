@@ -49,6 +49,9 @@ public partial class AchievementsPageViewModel : ObservableObject
     [ObservableProperty]
     private string _selectedServiceConfigId = string.Empty;
 
+    [ObservableProperty]
+    private bool _isEventBased;
+
     public void LoadAchievementsForGame(Game game)
     {
         GameName = game.Title;
@@ -56,6 +59,7 @@ public partial class AchievementsPageViewModel : ObservableObject
         SelectedTitleId = game.TitleId;
         SelectedServiceConfigId = game.ServiceConfigId;
         GameInfo = $"{game.CurrentAchievements}/{game.TotalAchievements} Unlocked";
+        IsEventBased = false;
         _ = LoadAchievementsAsync();
     }
 
@@ -69,6 +73,7 @@ public partial class AchievementsPageViewModel : ObservableObject
 
         try
         {
+            await XboxAuthService.EnsureXuidAsync();
             _api.RefreshClient();
             var achievements = await _api.GetAchievementsAsync(XboxAuthService.Xuid ?? "", SelectedTitleId);
             foreach (var achievement in achievements)
@@ -77,6 +82,7 @@ public partial class AchievementsPageViewModel : ObservableObject
             var unlocked = achievements.Count(a => a.ProgressState == "Achieved");
             GameInfo = $"{unlocked}/{achievements.Count} Unlocked";
             IsUnlockAllEnabled = achievements.Any(a => a.ProgressState != "Achieved");
+            IsEventBased = achievements.Any(a => (a.Category ?? "").Equals("Event", StringComparison.OrdinalIgnoreCase));
         }
         catch (Exception ex)
         {

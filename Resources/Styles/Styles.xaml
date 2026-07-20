@@ -14,13 +14,13 @@
     </Style>
 
     <Style TargetType="Border">
-        <Setter Property="Stroke" Value="#222222" />
+        <Setter Property="Stroke" Value="{DynamicResource KrakenBorder}" />
         <Setter Property="StrokeShape" Value="Rectangle"/>
         <Setter Property="StrokeThickness" Value="1"/>
     </Style>
 
     <Style TargetType="BoxView">
-        <Setter Property="BackgroundColor" Value="#141414" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource KrakenCard}" />
     </Style>
 
     <Style TargetType="Button">
@@ -39,8 +39,8 @@
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="#555555" />
-                            <Setter Property="BackgroundColor" Value="#1A1A1A" />
+                            <Setter Property="TextColor" Value="{DynamicResource KrakenDisabledText}" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource KrakenCardHighlight}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="PointerOver" />
@@ -77,21 +77,21 @@
     </Style>
 
     <Style TargetType="Editor">
-        <Setter Property="TextColor" Value="#FFFFFF" />
+        <Setter Property="TextColor" Value="{DynamicResource KrakenTextPrimary}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="OpenSansRegular"/>
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="PlaceholderColor" Value="#555555" />
+        <Setter Property="PlaceholderColor" Value="{DynamicResource KrakenTextTertiary}" />
         <Setter Property="MinimumHeightRequest" Value="44"/>
         <Setter Property="MinimumWidthRequest" Value="44"/>
     </Style>
 
     <Style TargetType="Entry">
-        <Setter Property="TextColor" Value="#FFFFFF" />
+        <Setter Property="TextColor" Value="{DynamicResource KrakenTextPrimary}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="OpenSansRegular"/>
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="PlaceholderColor" Value="#555555" />
+        <Setter Property="PlaceholderColor" Value="{DynamicResource KrakenTextTertiary}" />
         <Setter Property="MinimumHeightRequest" Value="44"/>
         <Setter Property="MinimumWidthRequest" Value="44"/>
         <Setter Property="VisualStateManager.VisualStateGroups">
@@ -100,7 +100,7 @@
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="#444444" />
+                            <Setter Property="TextColor" Value="{DynamicResource KrakenDisabledText}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -118,14 +118,14 @@
     </Style>
 
     <Style TargetType="Label">
-        <Setter Property="TextColor" Value="#FFFFFF" />
+        <Setter Property="TextColor" Value="{DynamicResource KrakenTextPrimary}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="OpenSansRegular" />
         <Setter Property="FontSize" Value="14" />
     </Style>
 
     <Style TargetType="Label" x:Key="Headline">
-        <Setter Property="TextColor" Value="#FFFFFF" />
+        <Setter Property="TextColor" Value="{DynamicResource KrakenTextPrimary}" />
         <Setter Property="FontSize" Value="32" />
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="HorizontalOptions" Value="Center" />
@@ -133,7 +133,7 @@
     </Style>
 
     <Style TargetType="Label" x:Key="SubHeadline">
-        <Setter Property="TextColor" Value="#888888" />
+        <Setter Property="TextColor" Value="{DynamicResource KrakenTextSecondary}" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
@@ -174,10 +174,10 @@
     </Style>
 
     <Style TargetType="SearchBar">
-        <Setter Property="TextColor" Value="#FFFFFF" />
-        <Setter Property="PlaceholderColor" Value="#555555" />
-        <Setter Property="CancelButtonColor" Value="#888888" />
-        <Setter Property="BackgroundColor" Value="#141414" />
+        <Setter Property="TextColor" Value="{DynamicResource KrakenTextPrimary}" />
+        <Setter Property="PlaceholderColor" Value="{DynamicResource KrakenTextTertiary}" />
+        <Setter Property="CancelButtonColor" Value="{DynamicResource KrakenTextSecondary}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource KrakenSearchBg}" />
         <Setter Property="FontFamily" Value="OpenSansRegular" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="MinimumHeightRequest" Value="44"/>
@@ -185,9 +185,9 @@
     </Style>
 
     <Style TargetType="SearchHandler">
-        <Setter Property="TextColor" Value="#FFFFFF" />
-        <Setter Property="PlaceholderColor" Value="#555555" />
-        <Setter Property="BackgroundColor" Value="#0A0A0A" />
+        <Setter Property="TextColor" Value="{DynamicResource KrakenTextPrimary}" />
+        <Setter Property="PlaceholderColor" Value="{DynamicResource KrakenTextTertiary}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource KrakenBackground}" />
         <Setter Property="FontFamily" Value="OpenSansRegular" />
         <Setter Property="FontSize" Value="14" />
     </Style>
@@ -238,32 +238,32 @@
 
     <Style TargetType="Page" ApplyToDerivedTypes="True">
         <Setter Property="Padding" Value="0"/>
-        <Setter Property="BackgroundColor" Value="#0A0A0A" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource KrakenBackground}" />
     </Style>
 
     <Style TargetType="Shell" ApplyToDerivedTypes="True">
-        <Setter Property="Shell.BackgroundColor" Value="#0A0A0A" />
+        <Setter Property="Shell.BackgroundColor" Value="{DynamicResource KrakenBackground}" />
         <Setter Property="Shell.ForegroundColor" Value="#CC0000" />
-        <Setter Property="Shell.TitleColor" Value="#FFFFFF" />
-        <Setter Property="Shell.DisabledColor" Value="#444444" />
-        <Setter Property="Shell.UnselectedColor" Value="#888888" />
+        <Setter Property="Shell.TitleColor" Value="{DynamicResource KrakenTextPrimary}" />
+        <Setter Property="Shell.DisabledColor" Value="{DynamicResource KrakenTextTertiary}" />
+        <Setter Property="Shell.UnselectedColor" Value="{DynamicResource KrakenTextSecondary}" />
         <Setter Property="Shell.NavBarHasShadow" Value="False" />
-        <Setter Property="Shell.TabBarBackgroundColor" Value="#0A0A0A" />
+        <Setter Property="Shell.TabBarBackgroundColor" Value="{DynamicResource KrakenBackground}" />
         <Setter Property="Shell.TabBarForegroundColor" Value="#CC0000" />
         <Setter Property="Shell.TabBarTitleColor" Value="#CC0000" />
-        <Setter Property="Shell.TabBarUnselectedColor" Value="#888888" />
+        <Setter Property="Shell.TabBarUnselectedColor" Value="{DynamicResource KrakenTextSecondary}" />
     </Style>
 
     <Style TargetType="NavigationPage">
-        <Setter Property="BarBackgroundColor" Value="#0A0A0A" />
-        <Setter Property="BarTextColor" Value="#FFFFFF" />
+        <Setter Property="BarBackgroundColor" Value="{DynamicResource KrakenBackground}" />
+        <Setter Property="BarTextColor" Value="{DynamicResource KrakenTextPrimary}" />
         <Setter Property="IconColor" Value="#CC0000" />
     </Style>
 
     <Style TargetType="TabbedPage">
-        <Setter Property="BarBackgroundColor" Value="#0A0A0A" />
+        <Setter Property="BarBackgroundColor" Value="{DynamicResource KrakenBackground}" />
         <Setter Property="BarTextColor" Value="#CC0000" />
-        <Setter Property="UnselectedTabColor" Value="#888888" />
+        <Setter Property="UnselectedTabColor" Value="{DynamicResource KrakenTextSecondary}" />
         <Setter Property="SelectedTabColor" Value="#CC0000" />
     </Style>
 
@@ -280,16 +280,16 @@
     </Style>
 
     <Style x:Key="KrakenCard" TargetType="Border">
-        <Setter Property="BackgroundColor" Value="#141414" />
-        <Setter Property="Stroke" Value="#222222" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource KrakenCard}" />
+        <Setter Property="Stroke" Value="{DynamicResource KrakenBorder}" />
         <Setter Property="StrokeThickness" Value="1" />
         <Setter Property="StrokeShape" Value="RoundRectangle 12" />
         <Setter Property="Padding" Value="16" />
     </Style>
 
     <Style x:Key="KrakenCardRed" TargetType="Border">
-        <Setter Property="BackgroundColor" Value="#1A0505" />
-        <Setter Property="Stroke" Value="#440B0B" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource KrakenStatBg}" />
+        <Setter Property="Stroke" Value="{DynamicResource KrakenStatBorder}" />
         <Setter Property="StrokeThickness" Value="1" />
         <Setter Property="StrokeShape" Value="RoundRectangle 10" />
         <Setter Property="Padding" Value="14" />
@@ -307,13 +307,13 @@
     </Style>
 
     <Style x:Key="KrakenSecondaryButton" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="#1A1A1A" />
-        <Setter Property="TextColor" Value="#CCCCCC" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource KrakenCardHighlight}" />
+        <Setter Property="TextColor" Value="{DynamicResource KrakenTextSecondary}" />
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="CornerRadius" Value="8" />
         <Setter Property="Padding" Value="20,12" />
-        <Setter Property="BorderColor" Value="#222222" />
+        <Setter Property="BorderColor" Value="{DynamicResource KrakenBorder}" />
         <Setter Property="BorderWidth" Value="1" />
     </Style>
 
@@ -324,26 +324,26 @@
     </Style>
 
     <Style x:Key="KrakenStatValue" TargetType="Label">
-        <Setter Property="TextColor" Value="#FFFFFF" />
+        <Setter Property="TextColor" Value="{DynamicResource KrakenTextPrimary}" />
         <Setter Property="FontSize" Value="15" />
         <Setter Property="FontAttributes" Value="Bold" />
     </Style>
 
     <Style x:Key="KrakenSectionTitle" TargetType="Label">
-        <Setter Property="TextColor" Value="#FFFFFF" />
+        <Setter Property="TextColor" Value="{DynamicResource KrakenTextPrimary}" />
         <Setter Property="FontSize" Value="22" />
         <Setter Property="FontAttributes" Value="Bold" />
     </Style>
 
     <Style x:Key="KrakenSectionSubtitle" TargetType="Label">
-        <Setter Property="TextColor" Value="#888888" />
+        <Setter Property="TextColor" Value="{DynamicResource KrakenTextSecondary}" />
         <Setter Property="FontSize" Value="13" />
     </Style>
 
     <Style x:Key="KrakenEntry" TargetType="Entry">
-        <Setter Property="TextColor" Value="#FFFFFF" />
-        <Setter Property="PlaceholderColor" Value="#555555" />
-        <Setter Property="BackgroundColor" Value="#111111" />
+        <Setter Property="TextColor" Value="{DynamicResource KrakenTextPrimary}" />
+        <Setter Property="PlaceholderColor" Value="{DynamicResource KrakenTextTertiary}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource KrakenEditorBg}" />
         <Setter Property="FontSize" Value="14" />
     </Style>
 

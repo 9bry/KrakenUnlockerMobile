@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:KrakenMobile.ViewModels"
              x:Class="KrakenMobile.Views.SettingsPage"
-             BackgroundColor="#0A0A0A"
+             BackgroundColor="{DynamicResource KrakenBackground}"
              Title="Settings">
 
     <ScrollView>
@@ -20,8 +20,8 @@
                    Margin="4,0,0,20" />
 
             <!-- License / Activation Card -->
-            <Border BackgroundColor="#141414"
-                    Stroke="#222222"
+            <Border BackgroundColor="{DynamicResource KrakenCard}"
+                    Stroke="{DynamicResource KrakenBorder}"
                     StrokeThickness="1"
                     StrokeShape="RoundRectangle 12"
                     Padding="16"
@@ -37,7 +37,7 @@
                             <Label Text="Kraken Unlocker Mobile"
                                    FontSize="14"
                                    FontAttributes="Bold"
-                                   TextColor="#FFFFFF" />
+                                   TextColor="{DynamicResource KrakenTextPrimary}" />
                             <Label Text="{Binding LicenseStatus}"
                                    FontSize="12"
                                    TextColor="#00AA00" />
@@ -46,15 +46,15 @@
                         <Label Grid.Column="1"
                                Text="{Binding VersionText}"
                                FontSize="12"
-                               TextColor="#888888"
+                               TextColor="{DynamicResource KrakenTextSecondary}"
                                VerticalOptions="Center" />
                     </Grid>
                 </VerticalStackLayout>
             </Border>
 
             <!-- Account Card -->
-            <Border BackgroundColor="#141414"
-                    Stroke="#222222"
+            <Border BackgroundColor="{DynamicResource KrakenCard}"
+                    Stroke="{DynamicResource KrakenBorder}"
                     StrokeThickness="1"
                     StrokeShape="RoundRectangle 12"
                     Padding="16"
@@ -74,14 +74,14 @@
 
                     <Label Text="{Binding AccountStatus}"
                            FontSize="12"
-                           TextColor="#888888"
+                           TextColor="{DynamicResource KrakenTextSecondary}"
                            HorizontalOptions="Center" />
                 </VerticalStackLayout>
             </Border>
 
             <!-- Preferences Card -->
-            <Border BackgroundColor="#141414"
-                    Stroke="#222222"
+            <Border BackgroundColor="{DynamicResource KrakenCard}"
+                    Stroke="{DynamicResource KrakenBorder}"
                     StrokeThickness="1"
                     StrokeShape="RoundRectangle 12"
                     Padding="16"
@@ -98,15 +98,15 @@
                             <Label Text="Dark Mode"
                                    FontSize="14"
                                    FontAttributes="Bold"
-                                   TextColor="#FFFFFF" />
+                                   TextColor="{DynamicResource KrakenTextPrimary}" />
                             <Label Text="Use dark theme throughout the app"
                                    FontSize="12"
-                                   TextColor="#888888" />
+                                   TextColor="{DynamicResource KrakenTextSecondary}" />
                         </VerticalStackLayout>
                         <Switch Grid.Column="1"
                                 IsToggled="{Binding DarkModeEnabled}"
                                 OnColor="#CC0000"
-                                ThumbColor="#FFFFFF"
+                                ThumbColor="{DynamicResource KrakenTextPrimary}"
                                 VerticalOptions="Center" />
                     </Grid>
 
@@ -116,23 +116,23 @@
                             <Label Text="Notifications"
                                    FontSize="14"
                                    FontAttributes="Bold"
-                                   TextColor="#FFFFFF" />
+                                   TextColor="{DynamicResource KrakenTextPrimary}" />
                             <Label Text="Receive unlock notifications"
                                    FontSize="12"
-                                   TextColor="#888888" />
+                                   TextColor="{DynamicResource KrakenTextSecondary}" />
                         </VerticalStackLayout>
                         <Switch Grid.Column="1"
                                 IsToggled="{Binding NotificationsEnabled}"
                                 OnColor="#CC0000"
-                                ThumbColor="#FFFFFF"
+                                ThumbColor="{DynamicResource KrakenTextPrimary}"
                                 VerticalOptions="Center" />
                     </Grid>
                 </VerticalStackLayout>
             </Border>
 
             <!-- Xbox Auth Token Card -->
-            <Border BackgroundColor="#141414"
-                    Stroke="#222222"
+            <Border BackgroundColor="{DynamicResource KrakenCard}"
+                    Stroke="{DynamicResource KrakenBorder}"
                     StrokeThickness="1"
                     StrokeShape="RoundRectangle 12"
                     Padding="16"
@@ -145,17 +145,17 @@
 
                     <Label Text="Paste your XAuth (XBL) token to sign in without the Microsoft login flow. Copy it from the PC version of Kraken Unlocker."
                            FontSize="12"
-                           TextColor="#888888" />
+                           TextColor="{DynamicResource KrakenTextSecondary}" />
 
                     <Editor Text="{Binding XblTokenText}"
                             AutoSize="TextChanges"
                             HeightRequest="70"
                             IsTextPredictionEnabled="False"
                             IsSpellCheckEnabled="False"
-                            BackgroundColor="#0A0A0A"
-                            TextColor="#FFFFFF"
+                            BackgroundColor="{DynamicResource KrakenBackground}"
+                            TextColor="{DynamicResource KrakenTextPrimary}"
                             Placeholder="XBL3.0 x=...;..."
-                            PlaceholderColor="#555555" />
+                            PlaceholderColor="{DynamicResource KrakenTextTertiary}" />
 
                     <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                         <Button Grid.Column="0"
@@ -177,8 +177,8 @@
             </Border>
 
             <!-- Event Token Card -->
-            <Border BackgroundColor="#141414"
-                    Stroke="#222222"
+            <Border BackgroundColor="{DynamicResource KrakenCard}"
+                    Stroke="{DynamicResource KrakenBorder}"
                     StrokeThickness="1"
                     StrokeShape="RoundRectangle 12"
                     Padding="16"
@@ -191,17 +191,17 @@
 
                     <Label Text="Paste the event token copied from the PC version of Kraken Unlocker."
                            FontSize="12"
-                           TextColor="#888888" />
+                           TextColor="{DynamicResource KrakenTextSecondary}" />
 
                     <Editor Text="{Binding EventTokenText}"
                             AutoSize="TextChanges"
                             HeightRequest="70"
                             IsTextPredictionEnabled="False"
                             IsSpellCheckEnabled="False"
-                            BackgroundColor="#0A0A0A"
-                            TextColor="#FFFFFF"
+                            BackgroundColor="{DynamicResource KrakenBackground}"
+                            TextColor="{DynamicResource KrakenTextPrimary}"
                             Placeholder="x:XBL3.0 x=...;..."
-                            PlaceholderColor="#555555" />
+                            PlaceholderColor="{DynamicResource KrakenTextTertiary}" />
 
                     <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                         <Button Grid.Column="0"
@@ -223,8 +223,8 @@
             </Border>
 
             <!-- About Card -->
-            <Border BackgroundColor="#141414"
-                    Stroke="#222222"
+            <Border BackgroundColor="{DynamicResource KrakenCard}"
+                    Stroke="{DynamicResource KrakenBorder}"
                     StrokeThickness="1"
                     StrokeShape="RoundRectangle 12"
                     Padding="16"
@@ -242,12 +242,12 @@
 
                     <Label Text="Xbox Achievement Unlocker - Mobile Edition"
                            FontSize="12"
-                           TextColor="#555555"
+                           TextColor="{DynamicResource KrakenTextTertiary}"
                            HorizontalOptions="Center" />
 
                     <Label Text="{Binding VersionText}"
                            FontSize="11"
-                           TextColor="#444444"
+                           TextColor="{DynamicResource KrakenTextTertiary}"
                            HorizontalOptions="Center" />
                 </VerticalStackLayout>
             </Border>
