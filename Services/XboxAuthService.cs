@@ -162,6 +162,11 @@ public static class XboxAuthService
             _cachedUhs = null;
             _cachedSpoofToken = null;
             _pop = null;
+
+            _manualXblToken = null;
+            _manualXuid = null;
+            try { SecureStorage.Remove(ManualXblTokenKey); } catch { }
+
             Diag("logout OK");
             return true;
         }
@@ -337,7 +342,8 @@ public static class XboxAuthService
         return IsLoggedIn ? _cachedEventsToken : null;
     }
 
-    public static string? GetSpoofToken() => IsLoggedIn ? (_cachedSpoofToken ?? _cachedXblToken) : null;
+    public static string? GetSpoofToken() =>
+        HasManualXblToken ? _manualXblToken : (IsLoggedIn ? (_cachedSpoofToken ?? _cachedXblToken) : null);
 
     public static string? SignRequest(string method, string uri, string body) =>
         _pop?.SignRequest(method, uri, _cachedXblToken ?? "", body);

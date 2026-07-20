@@ -8,6 +8,8 @@ namespace KrakenMobile.Views;
 
 public partial class AchievementsPage : ContentPage
 {
+    public static Game? PendingGame { get; set; }
+
     private readonly AchievementsPageViewModel _viewModel;
 
     public AchievementsPage()
@@ -15,6 +17,18 @@ public partial class AchievementsPage : ContentPage
         InitializeComponent();
         _viewModel = new AchievementsPageViewModel();
         BindingContext = _viewModel;
+    }
+
+    public void LoadGame(Game game) => _viewModel.LoadAchievementsForGame(game);
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        if (PendingGame != null)
+        {
+            _viewModel.LoadAchievementsForGame(PendingGame);
+            PendingGame = null;
+        }
     }
 }
 

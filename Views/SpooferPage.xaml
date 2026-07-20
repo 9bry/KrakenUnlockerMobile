@@ -183,7 +183,7 @@
                         Style="{StaticResource KrakenPrimaryButton}"
                         HorizontalOptions="Fill"
                         HeightRequest="52"
-                        Command="{Binding ToggleSpoofCommand}" />
+                         Command="{Binding ToggleSpoofAsyncCommand}" />
 
                 <Button Grid.Column="1"
                         Text="Stop"

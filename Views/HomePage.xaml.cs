@@ -54,6 +54,12 @@ public partial class HomePageViewModel : ObservableObject
     {
         if (!XboxAuthService.IsLoggedIn)
         {
+            GamerTag = "Not Logged In";
+            Xuid = "N/A";
+            XuidDisplay = "XUID: Not available";
+            GamerPic = string.Empty;
+            GamerScore = 0;
+            GameCount = "0 games";
             LoginStatus = "Offline";
             StatusText = "Not signed in. Go to Settings to sign in.";
             return;

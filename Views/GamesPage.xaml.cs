@@ -26,6 +26,7 @@ public partial class GamesPage : ContentPage
 public partial class GamesPageViewModel : ObservableObject
 {
     private readonly XboxApiService _api = new();
+    private List<Game> _allGames = new();
 
     [ObservableProperty]
     private ObservableCollection<Game> _games = new();
@@ -56,9 +57,9 @@ public partial class GamesPageViewModel : ObservableObject
         {
             await XboxAuthService.EnsureXuidAsync();
             _api.RefreshClient();
-            var games = await _api.GetGamesListAsync();
+            _allGames = await _api.GetGamesListAsync();
             Games.Clear();
-            foreach (var game in games)
+            foreach (var game in _allGames)
                 Games.Add(game);
 
             GameCountText = $"{Games.Count} games";
@@ -75,27 +76,33 @@ public partial class GamesPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void SelectGame(Game? game)
+    private async Task SelectGameAsync(Game? game)
     {
+        if (game == null) return;
         SelectedGame = game;
+
+        try
+        {
+            Views.AchievementsPage.PendingGame = game;
+            await Shell.Current.GoToAsync("//AchievementsPage");
+        }
+        catch { }
     }
 
     [RelayCommand]
-    private async Task SearchGamesAsync()
+    private void SearchGamesAsync()
     {
-        if (string.IsNullOrWhiteSpace(SearchText))
-        {
-            await LoadGamesAsync();
-            return;
-        }
-
-        var filtered = Games.Where(g =>
-            g.Title.Contains(SearchText, StringComparison.OrdinalIgnoreCase)).ToList();
+        var source = _allGames;
+        var filtered = string.IsNullOrWhiteSpace(SearchText)
+            ? source
+            : source.Where(g => g.Title.Contains(SearchText, StringComparison.OrdinalIgnoreCase)).ToList();
 
         Games.Clear();
         foreach (var game in filtered)
             Games.Add(game);
 
-        GameCountText = $"{Games.Count} games found";
+        GameCountText = string.IsNullOrWhiteSpace(SearchText)
+            ? $"{Games.Count} games"
+            : $"{Games.Count} games found";
     }
 }

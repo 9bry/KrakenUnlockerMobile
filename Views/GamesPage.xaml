@@ -65,10 +65,10 @@
                      Command="{Binding LoadGamesCommand}"
                      RefreshColor="#CC0000">
 
-            <CollectionView ItemsSource="{Binding Games}"
-                            SelectionMode="Single"
-                            SelectionChangedCommand="{Binding SelectGameCommand}"
-                            SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}">
+                <CollectionView ItemsSource="{Binding Games}"
+                                SelectionMode="Single"
+                                SelectionChangedCommand="{Binding SelectGameAsyncCommand}"
+                                SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
                 </CollectionView.ItemsLayout>

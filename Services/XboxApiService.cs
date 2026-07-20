@@ -11,7 +11,7 @@ public class Game
     public int TotalAchievements { get; set; }
     public int Gamerscore { get; set; }
     public int TotalGamerscore { get; set; }
-    public double Progress => TotalAchievements > 0 ? (double)CurrentAchievements / TotalAchievements * 100 : 0;
+    public double Progress => TotalAchievements > 0 ? (double)CurrentAchievements / TotalAchievements : 0;
     public bool IsTitleBased { get; set; } = true;
 }
 
@@ -188,5 +188,38 @@ public class XboxApiService
         {
             return 0;
         }
+    }
+
+    public async Task<bool> SendSpoofHeartbeatAsync(string spoofedTitleId)
+    {
+        var token = XboxAuthService.GetSpoofToken();
+        var xuid = XboxAuthService.Xuid;
+        if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(xuid) || string.IsNullOrEmpty(spoofedTitleId))
+            return false;
+
+        try
+        {
+            var api = new XboxRestApi(token);
+            return await api.SendHeartbeatAsync(xuid, spoofedTitleId);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public async Task StopSpoofHeartbeatAsync()
+    {
+        var token = XboxAuthService.GetSpoofToken();
+        var xuid = XboxAuthService.Xuid;
+        if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(xuid))
+            return;
+
+        try
+        {
+            var api = new XboxRestApi(token);
+            await api.StopHeartbeatAsync(xuid);
+        }
+        catch { }
     }
 }
